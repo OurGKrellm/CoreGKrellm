@@ -6,11 +6,12 @@
 */
 
 #include "ModuleHandler.hpp"
+#include "ModuleFactory.hpp"
 
 ModuleHandler::ModuleHandler()
     : _modules()
     , _monitors{new GraphicDisplay(), new TextDisplay()}
-    , _actualDisplay(_monitors[0])
+    , _actualDisplay(_monitors[1])
     , _monitorIndex(0)
 {
 }
@@ -31,9 +32,11 @@ bool ModuleHandler::handle()
 {
     if (_actualDisplay == nullptr)
         return false;
-
+    for (auto temp : _modules) {
+        temp->UpdateContent();
+    }
     auto state = _actualDisplay->draw(_modules);
-
+    
     if (state == IMonitorDisplay::State::QUIT) {
         return false;
     } else if (state == IMonitorDisplay::State::SWITCH) {

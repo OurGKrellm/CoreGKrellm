@@ -6,6 +6,7 @@
 */
 
 #include "Utils.hpp"
+#include "ModuleFactory.hpp"
 #include "TextDisplay.hpp"
 
 TextDisplay::TextDisplay()
@@ -21,8 +22,8 @@ TextDisplay::~TextDisplay()
 
 std::size_t TextDisplay::remakeWidgets(std::vector<IMonitorModule *> &modules)
 {
-    for (auto temp : this->widgets) {
-        free(temp);
+    for (auto &temp : this->widgets) {
+        delwin(temp);
     }
     this->widgets = std::vector<WINDOW *>();
     for (auto temp : modules) {
@@ -49,5 +50,13 @@ IMonitorDisplay::State TextDisplay::draw(std::vector<IMonitorModule *> &modules)
         waddstr(*win, (*module)->getContent().content.c_str());
     }
     refresh();
+    auto temp = getch();
+    if (temp == 259) {
+        modules.push_back(ModuleFactory::getFactory()->clone("user"));
+    }
+    if (temp == 9) {
+        endwin();
+        return (IMonitorDisplay::State::SWITCH);
+    }
     return (IMonitorDisplay::State::NONE);
 }
