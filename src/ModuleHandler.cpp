@@ -11,6 +11,7 @@ ModuleHandler::ModuleHandler()
     : _modules()
     , _monitors{new GraphicDisplay(), new TextDisplay()}
     , _actualDisplay(_monitors[0])
+    , _monitorIndex(0)
 {
 }
 
@@ -36,7 +37,9 @@ bool ModuleHandler::handle()
     if (state == IMonitorDisplay::State::QUIT) {
         return false;
     } else if (state == IMonitorDisplay::State::SWITCH) {
-        std::cout << "Should switch." << std::endl;
+        if (_monitorIndex + 1 >= _monitors.size())
+            _monitorIndex = -1;
+        _actualDisplay = _monitors[++_monitorIndex];
     }
     return true;
 }

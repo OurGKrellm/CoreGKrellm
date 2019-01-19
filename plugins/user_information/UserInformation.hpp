@@ -19,6 +19,7 @@ class UserInformation : public IMonitorModule
         Content getContent() override;
         std::string getTitle() override;
         ModulePosition getPosititon() override;
+        IMonitorModule *clone() override;
 
     private:
         Content _content;

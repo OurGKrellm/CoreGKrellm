@@ -41,3 +41,8 @@ std::string SystemInformation::getTitle() {
 ModulePosition SystemInformation::getPosititon() {
     return _pos;
 }
+
+IMonitorModule *SystemInformation::clone()
+{
+    return new SystemInformation();
+}

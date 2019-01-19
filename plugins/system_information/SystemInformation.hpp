@@ -14,10 +14,12 @@ class SystemInformation : public IMonitorModule
 {
 public:
     SystemInformation();
+    ~SystemInformation() override = default;
     void UpdateContent() override;
     Content getContent() override;
     std::string getTitle() override;
     ModulePosition getPosititon() override;
+    IMonitorModule *clone() override;
 private:
     Content _content;
     std::string _title;

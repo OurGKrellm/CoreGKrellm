@@ -11,10 +11,6 @@
 TextDisplay::TextDisplay()
 : previousHash(0)
 {
-    this->window = initscr();
-    cbreak();
-    noecho();
-    keypad(stdscr, TRUE);
 }
 
 TextDisplay::~TextDisplay()
@@ -39,6 +35,12 @@ std::size_t TextDisplay::remakeWidgets(std::vector<IMonitorModule *> &modules)
 
 IMonitorDisplay::State TextDisplay::draw(std::vector<IMonitorModule *> &modules)
 {
+    if (this->window == nullptr) {
+        this->window = initscr();
+        cbreak();
+        noecho();
+        keypad(stdscr, TRUE);
+    }
     if (this->previousHash != Utils::hash(modules))
         this->previousHash = remakeWidgets(modules);
     auto module = modules.begin();

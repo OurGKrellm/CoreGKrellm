@@ -26,6 +26,7 @@ private:
     std::vector<IMonitorModule *> _modules;
     std::vector<IMonitorDisplay *> _monitors;
     IMonitorDisplay *_actualDisplay;
+    int _monitorIndex;
 };
 
 #endif /* !MODULEHANDLER_HPP_ */

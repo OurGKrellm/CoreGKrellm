@@ -19,7 +19,8 @@ typedef struct ModulePosition {
 enum ContentType {
     CAMEMBERT,
     TEXT,
-    PERCENTAGE
+    PERCENTAGE,
+    MULTI_PERCENTAGE//Format Content.content = "%25:CPU 1%34:CPU 2" -> 2 pourcentages, 25% titre 'CPU 1', 34% titre 'CPU 2'
 };
 
 typedef struct Content {
