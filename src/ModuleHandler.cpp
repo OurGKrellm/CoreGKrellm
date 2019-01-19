@@ -23,9 +23,6 @@ void ModuleHandler::loadDisplayer(IMonitorDisplay *display)
 
 ModuleHandler::~ModuleHandler()
 {
-    for (auto &elem: _monitors) {
-        delete elem;
-    }
 }
 
 bool ModuleHandler::handle()
@@ -44,6 +41,7 @@ bool ModuleHandler::handle()
     auto state = _actualDisplay->draw(_modules);
     
     if (state == IMonitorDisplay::State::QUIT) {
+        _actualDisplay->unloadResources();
         return false;
     } else if (state == IMonitorDisplay::State::SWITCH) {
         if (_monitorIndex + 1 >= _monitors.size())
