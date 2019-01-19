@@ -11,15 +11,15 @@ SRC_DIR	=			.
 
 CXX		=		g++
 
-NAME	=			../processor_module.so
+NAME	=			../system-module.so
 
 BUILD	=			$(ROOT)/build
 
 SRC		=		$(SRC_DIR)/entrypoint.cpp \
-				$(SRC_DIR)/ProcessorInformation.cpp
+				$(SRC_DIR)/SystemInformation.cpp
 
 
-CXXFLAGS=			-g -I $(ROOT) -I ../../inc $(WARN) -std=gnu++17 -fPIC
+CXXFLAGS=			-g -I $(ROOT) -I ../../../inc $(WARN) -std=gnu++17 -fPIC
 
 LDFLAGS	=			-L -lstdc++fs -shared
 

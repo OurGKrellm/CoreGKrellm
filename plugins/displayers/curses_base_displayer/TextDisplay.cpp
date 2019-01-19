@@ -14,7 +14,8 @@ const int WIDGET_W = 53;
 const int WIDGET_H = 17;
 
 TextDisplay::TextDisplay()
-: previousHash(0)
+:     window(nullptr)
+    , vectorHash(0)
 {
 }
 
@@ -39,19 +40,32 @@ void printMultiline(WINDOW *win, int start_y, int start_x, const std::string &st
 void printPercentage(WINDOW *win, int start_y, int start_x, const std::string &str)
 {
     int percentage = std::stol(str);
-    float percent_per_char = 100 / WIDGET_W;
+    float percent_per_char = 100 / (WIDGET_W - 4);
     int char_to_print = percentage / percent_per_char;
+    int toPrintPercentage = ((WIDGET_W - 4) / 2);
+    int colorPair = 0;
 
     if (percentage < 33) {
-        wattron(win, COLOR_PAIR(3));
+        colorPair = 3;
     } else if (percentage < 66) {
-        wattron(win, COLOR_PAIR(2));
+        colorPair = 2;
     } else {
-        wattron(win, COLOR_PAIR(1));
+        colorPair = 1;
     }
-    for (int i = 0; i <= percent_per_char; i++)
-        mvwaddch(win, start_y, start_x + i, ' ');
-    wattron(win, COLOR_PAIR(0));
+
+    mvwaddstr(win, start_y, start_x, "/-------------------------------------------------\\");
+    mvwaddch(win, start_y + 1, start_x, '|');
+    mvwaddch(win, start_y + 1, start_x + WIDGET_W - 3, '|');
+    mvwaddstr(win, start_y + 2, start_x, "\\-------------------------------------------------/");
+    wattron(win, COLOR_PAIR(colorPair));
+    for (int i = 0; i <= char_to_print; i++)
+        mvwaddch(win, start_y + 1, start_x + i + 1, ' ');
+    wattroff(win, COLOR_PAIR(colorPair));
+    if (toPrintPercentage <= char_to_print)
+        wattron(win, COLOR_PAIR(colorPair + 3));
+    mvwaddstr(win, start_y + 1, start_x + toPrintPercentage, str.c_str());
+    if (toPrintPercentage <= char_to_print)
+        wattroff(win, COLOR_PAIR(colorPair + 3));
 }
 
 std::size_t TextDisplay::remakeWidgets(std::vector<IMonitorModule *> &modules)
@@ -59,13 +73,13 @@ std::size_t TextDisplay::remakeWidgets(std::vector<IMonitorModule *> &modules)
     int i = 0;
     int j = 0;
     for (auto &temp : this->widgets) {
+        wclear(temp);
         delwin(temp);
     }
     this->widgets = std::vector<WINDOW *>();
     for (auto temp : modules) {
         auto position = temp->getPosititon();
         this->widgets.push_back(subwin(this->window, WIDGET_H, WIDGET_W, position.y + (j * WIDGET_H), position.x + (i * WIDGET_W)));
-        wborder(this->widgets.back(), '|', '|', '-', '-', '+', '+', '+', '+');
         if (((i + 2) * WIDGET_W) <= COLS) {
             i++;
         } else {
@@ -73,7 +87,8 @@ std::size_t TextDisplay::remakeWidgets(std::vector<IMonitorModule *> &modules)
             j++;
         }
     }
-    return (Utils::hash(modules));
+    this->previousHashes.assign(modules.size(), 0);
+    return (Utils::hashVector(modules));
 }
 
 void TextDisplay::draw(IMonitorModule *module, WINDOW *window)
@@ -83,7 +98,7 @@ void TextDisplay::draw(IMonitorModule *module, WINDOW *window)
             printMultiline(window, 3, 1, module->getContent().content.c_str());
             break;
         case PERCENTAGE:
-            printPercentage(window, 3, 1, module->getContent().content.c_str());
+            printPercentage(window, 7, 1, module->getContent().content.c_str());
             break;
     }
 }
@@ -94,26 +109,39 @@ IMonitorDisplay::State TextDisplay::draw(std::vector<IMonitorModule *> &modules)
         this->window = initscr();
         cbreak();
         noecho();
+        halfdelay(3);
+        curs_set(0);
         keypad(stdscr, TRUE);
         start_color();
         init_pair(0, COLOR_WHITE, COLOR_BLACK);
         init_pair(1, COLOR_RED, COLOR_RED);
         init_pair(2, COLOR_YELLOW, COLOR_YELLOW);
         init_pair(3, COLOR_GREEN, COLOR_GREEN);
+        init_pair(4, COLOR_WHITE, COLOR_RED);
+        init_pair(5, COLOR_WHITE, COLOR_YELLOW);
+        init_pair(6, COLOR_WHITE, COLOR_GREEN);
     }
-    if (this->previousHash != Utils::hash(modules))
-        this->previousHash = remakeWidgets(modules);
-    auto module = modules.begin();
-    auto win = this->widgets.begin();
-    for (; module != modules.end(); module++, win++) {
-        mvwaddstr(*win, 1, 1, (*module)->getTitle().c_str());
-        mvwaddstr(*win, 2, 0, "+---------------------------------------------------+");
-        draw(*module, *win);
-        wrefresh(*win);
+    if (this->vectorHash != Utils::hashVector(modules))
+        this->vectorHash = remakeWidgets(modules);
+    std::hash<IMonitorModule> hashFn;
+    for (std::size_t i = 0; i < modules.size(); i++) {
+        if (this->previousHashes.at(i) != hashFn(*modules.at(i))) {
+            wclear(this->widgets.at(i));
+            wborder(this->widgets.at(i), '|', '|', '-', '-', '+', '+', '+', '+');
+            mvwaddstr(this->widgets.at(i), 1, 1, modules.at(i)->getTitle().c_str());
+            mvwaddstr(this->widgets.at(i), 2, 0, "+---------------------------------------------------+");
+            draw(modules.at(i), this->widgets.at(i));
+            wrefresh(this->widgets.at(i));
+            this->previousHashes.at(i) = hashFn(*modules.at(i));
+        }
     }
     auto temp = getch();
     if (temp == 259) {
         modules.push_back(ModuleFactory::getFactory()->clone("ram"));
+    }
+    if (temp == 258) {
+        delete modules.back();
+        modules.pop_back();
     }
     if (temp == 9) {
         endwin();

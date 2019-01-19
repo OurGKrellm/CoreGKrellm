@@ -11,15 +11,15 @@ SRC_DIR	=			.
 
 CXX		=		g++
 
-NAME	=			../ram_module.so
+NAME	=			../user-module.so
 
 BUILD	=			$(ROOT)/build
 
 SRC		=		$(SRC_DIR)/entrypoint.cpp \
-				$(SRC_DIR)/RamInformation.cpp
+				$(SRC_DIR)/UserInformation.cpp
 
 
-CXXFLAGS=			-g -I $(ROOT) -I ../../inc $(WARN) -std=gnu++17 -fPIC
+CXXFLAGS=			-g -I $(ROOT) -I ../../../inc $(WARN) -std=gnu++17 -fPIC
 
 LDFLAGS	=			-L -lstdc++fs -shared
 

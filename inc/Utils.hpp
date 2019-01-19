@@ -14,7 +14,7 @@
 
 class Utils {
     public:
-        static std::size_t hash(std::vector<IMonitorModule *> const &modules);
+        static std::size_t hashVector(std::vector<IMonitorModule *> const &modules);
 
     protected:
     private:

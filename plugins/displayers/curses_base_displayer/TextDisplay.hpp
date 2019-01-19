@@ -24,7 +24,8 @@ class TextDisplay : public IMonitorDisplay {
         void draw(IMonitorModule *module, WINDOW *window);
         WINDOW *window;
         std::vector<WINDOW *> widgets;
-        std::size_t previousHash;
+        std::vector<std::size_t> previousHashes;
+        std::size_t vectorHash;
 };
 
 #endif /* !TEXTDISPLAY_HPP_ */

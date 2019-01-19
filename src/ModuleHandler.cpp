@@ -10,10 +10,15 @@
 
 ModuleHandler::ModuleHandler()
     : _modules()
-    , _monitors{new TextDisplay()}
-    , _actualDisplay(_monitors[0])
+    , _monitors()
+    , _actualDisplay(nullptr)
     , _monitorIndex(0)
 {
+}
+
+void ModuleHandler::loadDisplayer(IMonitorDisplay *display)
+{
+    _monitors.push_back(display);
 }
 
 ModuleHandler::~ModuleHandler()
@@ -23,15 +28,12 @@ ModuleHandler::~ModuleHandler()
     }
 }
 
-void ModuleHandler::loadModule(const std::string &title)
-{
-    //TODO: Load Modules.
-}
-
 bool ModuleHandler::handle()
 {
-    if (_actualDisplay == nullptr)
+    if (_actualDisplay == nullptr && _monitors.size() == 0)
         return false;
+    else if (_actualDisplay == nullptr && _monitors.size() != 0)
+        _actualDisplay = _monitors[0];
     for (auto temp : _modules) {
         temp->UpdateContent();
     }

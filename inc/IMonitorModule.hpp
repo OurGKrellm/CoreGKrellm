@@ -9,6 +9,7 @@
 #define CPP_RUSH3_2018_IMONITORMODULE_HPP
 
 #include <string>
+#include <functional>
 
 typedef struct ModulePosition {
     unsigned int x;
@@ -48,5 +49,14 @@ class IMonitorModule
         virtual IMonitorModule *clone() = 0;
 };
 
+namespace std {
+    template<>
+    struct hash<IMonitorModule> {
+        size_t operator()(IMonitorModule &module) const {
+            std::hash<std::string> hashFn;
+            return hashFn(module.getContent().content);
+        }
+    };
+}
 
 #endif //CPP_RUSH3_2018_IMONITORMODULE_HPP

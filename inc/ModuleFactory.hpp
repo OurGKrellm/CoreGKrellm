@@ -26,6 +26,6 @@ class ModuleFactory {
         std::map<std::string, IMonitorModule *> instances;
 };
 
-typedef void (*entrypoint_t)(ModuleFactory *);
+typedef void (*entrypoint_module_t)(ModuleFactory *);
 
 #endif /* !MODULEFACTORY_HPP_ */
