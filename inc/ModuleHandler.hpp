@@ -12,6 +12,7 @@
 #include <iostream>
 #include "IMonitorModule.hpp"
 #include "IMonitorDisplay.hpp"
+#include "GraphicDisplay.hpp"
 
 class ModuleHandler {
 public:
