@@ -13,6 +13,7 @@
 typedef struct ModulePosition {
     unsigned int x;
     unsigned int y;
+    unsigned int size;
 } ModulePosition;
 
 enum ContentType {
@@ -39,7 +40,7 @@ enum Modules {
 class IMonitorModule
 {
     public:
-        virtual ~IMonitorModule() = 0;
+        virtual ~IMonitorModule() = default;
         virtual void UpdateContent() = 0;
         virtual Content getContent() = 0;
         virtual std::string getTitle() = 0;

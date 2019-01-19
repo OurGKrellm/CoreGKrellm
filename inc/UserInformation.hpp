@@ -14,13 +14,16 @@ class UserInformation : public IMonitorModule
 {
     public:
         UserInformation();
-        Content UpdateContent() override;
-        std::string getContent() override;
+        ~UserInformation() override = default;
+        void UpdateContent() override;
+        Content getContent() override;
         std::string getTitle() override;
         ModulePosition getPosititon() override;
 
     private:
-        Content content;
+        Content _content;
+        std::string _title;
+        ModulePosition _position;
 
 };
 
