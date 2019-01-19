@@ -9,6 +9,7 @@
 
 class IMonitorDisplay {
 public:
+    virtual ~IMonitorDisplay() = 0;
     virtual void draw(IMonitorModule *module) = 0;
 };
 
