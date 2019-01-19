@@ -21,7 +21,7 @@ SRC		=			$(SRC_DIR)/main.cpp \
 					$(SRC_DIR)/GraphicDisplay.cpp
 
 
-CXXFLAGS=			-g -I $(ROOT)/inc /usr/include/  $(WARN) -std=gnu++17
+CXXFLAGS=			-g -I $(ROOT)/inc $(WARN) -std=gnu++17
 
 LDFLAGS	=			-L /usr/lib/ -lsfml-system -lsfml-graphics -lsfml-window -lcurses
 

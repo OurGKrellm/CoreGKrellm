@@ -14,12 +14,18 @@
 class GraphicDisplay : public IMonitorDisplay {
 public:
 	GraphicDisplay();
+    GraphicDisplay(unsigned int width, unsigned int height);
 	~GraphicDisplay() = default;
 
-    void draw(std::vector<IMonitorModule *> modules) final;
+    bool draw(std::vector<IMonitorModule *> &modules) final;
 private:
+    void handleInput();
+    void update();
+    void drawModules();
+
     sf::RenderWindow _window;
     int _modulesNumber;
+    sf::Event _e;
 };
 
 #endif /* !GRAPHICDISPLAY_HPP_ */

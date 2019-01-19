@@ -18,7 +18,6 @@ typedef struct ModulePosition {
 
 enum ContentType {
     CAMEMBERT,
-    DIAGRAMME,
     TEXT,
     PERCENTAGE
 };
@@ -28,12 +27,21 @@ typedef struct Content {
     std::string content;
 } Content;
 
+enum Modules {
+    USER_INFORMATION,
+    SYSTEME_INFORMATION,
+    TIME,
+    CPU,
+    RAM,
+    NETWORK
+};
+
 class IMonitorModule
 {
     public:
-        virtual ~IMonitorModule() = 0;
-        virtual Content UpdateContent() = 0;
-        virtual std::string getContent() = 0;
+        virtual ~IMonitorModule() = default;
+        virtual void UpdateContent() = 0;
+        virtual Content getContent() = 0;
         virtual std::string getTitle() = 0;
         virtual ModulePosition getPosititon() = 0;
 };

@@ -12,7 +12,13 @@
 
 class IMonitorDisplay {
 public:
-    virtual void draw(std::vector<IMonitorModule *> modules) = 0;
+    enum State {
+        QUIT,
+        SWITCH
+    };
+
+    virtual ~IMonitorDisplay() = 0;
+    virtual State draw(std::vector<IMonitorModule *> &modules) = 0;
 };
 
 #endif //CPP_RUSH3_2018_IMONITORDISPLAY_HPP

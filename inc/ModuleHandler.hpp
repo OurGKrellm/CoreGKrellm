@@ -9,6 +9,7 @@
 	#define MODULEHANDLER_HPP_
 
 #include <vector>
+#include <iostream>
 #include "IMonitorModule.hpp"
 #include "IMonitorDisplay.hpp"
 
@@ -18,7 +19,7 @@ public:
 	~ModuleHandler();
 
     void loadModule(const std::string &title);
-    void handle();
+    bool handle();
 private:
     std::vector<IMonitorModule *> _modules;
     std::vector<IMonitorDisplay *> _monitors;
