@@ -71,9 +71,7 @@ void Application::run()
 {
     this->_factory.clone("test");
     while (_isRunning) {
-        // How to get input.
-        // How to set _isRunning to false.
-        _isRunning = _handler.handle();
+       _isRunning = _handler.handle();
     }
     unloadPlugins();
 }

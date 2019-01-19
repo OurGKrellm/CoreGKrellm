@@ -13,6 +13,7 @@
 #include "IMonitorModule.hpp"
 #include "IMonitorDisplay.hpp"
 #include "GraphicDisplay.hpp"
+#include "TextDisplay.hpp"
 
 class ModuleHandler {
 public:

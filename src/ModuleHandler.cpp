@@ -9,7 +9,7 @@
 
 ModuleHandler::ModuleHandler()
     : _modules()
-    , _monitors{new GraphicDisplay()}
+    , _monitors{new GraphicDisplay(), new TextDisplay()}
     , _actualDisplay(_monitors[0])
 {}
 
