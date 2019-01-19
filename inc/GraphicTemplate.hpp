@@ -48,4 +48,14 @@ private:
     std::vector<std::tuple<sf::Text, Percentage>> _percentages;
 };
 
+
+class Array : public sf::Drawable, public sf::Transform {
+    public:
+        Array(const std::string &csv, sf::Font &font);
+        ~Array();
+
+        void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
+    private:
+        std::vector<std::tuple<sf::Text, std::vector<sf::Text>>> _array;
+};
 #endif /* !GRAPHICTEMPLATE_HPP_ */
