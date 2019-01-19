@@ -25,6 +25,15 @@ typedef struct Content {
     std::string content;
 } Content;
 
+enum Modules {
+    USER_INFORMATION,
+    SYSTEME_INFORMATION,
+    TIME,
+    CPU,
+    RAM,
+    NETWORK
+};
+
 class IMonitorModule
 {
     public:
