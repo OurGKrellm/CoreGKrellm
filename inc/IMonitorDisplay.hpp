@@ -8,8 +8,8 @@
 #define CPP_RUSH3_2018_IMONITORDISPLAY_HPP
 
 class IMonitorDisplay {
-    public:
-        virtual void draw() = 0;
+public:
+    virtual void draw(IMonitorModule *module) = 0;
 };
 
 #endif //CPP_RUSH3_2018_IMONITORDISPLAY_HPP

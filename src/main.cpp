@@ -9,7 +9,7 @@
 
 int main()
 {
-    Application app();
+    Application app;
 
     app.setup();
     app.run();

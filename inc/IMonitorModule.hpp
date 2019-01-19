@@ -17,7 +17,9 @@ typedef struct ModulePosition {
 
 enum ContentType {
     CAMEMBERT,
-    DIAGRAMME
+    DIAGRAMME,
+    TEXT,
+    PERCENTAGE
 };
 
 typedef struct Content {
