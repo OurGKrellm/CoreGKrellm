@@ -17,11 +17,13 @@ BUILD	=			$(ROOT)/build
 
 SRC		=			$(SRC_DIR)/main.cpp \
 					$(SRC_DIR)/Application.cpp \
-					$(SRC_DIR)/ModuleHandler.cpp
+					$(SRC_DIR)/ModuleHandler.cpp \
+					$(SRC_DIR)/GraphicDisplay.cpp
 
-CXXFLAGS=			-I $(ROOT)/inc $(WARN) -std=gnu++17
 
-LDFLAGS	=			-L ./libs
+CXXFLAGS=			-g -I $(ROOT)/inc $(WARN) -std=gnu++17
+
+LDFLAGS	=			-L /usr/lib/ -lsfml-system -lsfml-graphics -lsfml-window -lcurses
 
 LIB 	?=			1
 
