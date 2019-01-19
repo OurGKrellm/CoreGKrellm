@@ -32,7 +32,7 @@ std::size_t TextDisplay::remakeWidgets(std::vector<IMonitorModule *> &modules)
     for (auto temp : modules) {
         auto position = temp->getPosititon();
         this->widgets.push_back(subwin(this->window, position.size / 2.5, position.size, position.y, position.x));
-        wborder(this->widgets.back(), '║', '║', '═', '═', '╔', '╗', '╚', '╝');
+        wborder(this->widgets.back(), '|', '|', '-', '-', '+', '+', '+', '+');
     }
     return (Utils::hash(modules));
 }
@@ -47,4 +47,5 @@ IMonitorDisplay::State TextDisplay::draw(std::vector<IMonitorModule *> &modules)
         waddstr(*win, (*module)->getContent().content.c_str());
     }
     refresh();
+    return (IMonitorDisplay::State::NONE);
 }
