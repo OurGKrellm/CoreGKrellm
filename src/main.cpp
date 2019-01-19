@@ -5,18 +5,13 @@
 ** main
 */
 
-#include <UserInformation.hpp>
-#include "RamInformation.hpp"
-#include <iostream>
+#include "Application.hpp"
 
 int main()
 {
-    //Application app;
+    Application app;
 
-    auto *userInformation = new RamInformation();
-    userInformation->UpdateContent();
-    std::cout << userInformation->getContent().content << std::endl;
-    /*app.setup();
-    app.run();*/
+    app.setup();
+    app.run();
     return 0;
 }
