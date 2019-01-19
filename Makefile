@@ -24,8 +24,8 @@ SRC		=			$(SRC_DIR)/main.cpp \
 					$(SRC_DIR)/PluginLoader.cpp \
 					$(SRC_DIR)/graphic/GraphicDisplay.cpp \
 					$(SRC_DIR)/graphic/Percentage.cpp \
+					$(SRC_DIR)/graphic/Text.cpp \
 					$(SRC_DIR)/ModuleFactory.cpp \
-					$(SRC_DIR)/text/TextDisplay.cpp \
 					$(SRC_DIR)/Utils.cpp \
 					$(SRC_DIR)/graphic/TopBar.cpp
 
