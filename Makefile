@@ -25,7 +25,7 @@ SRC		=			$(SRC_DIR)/main.cpp \
 					$(SRC_DIR)/Utils.cpp
 
 
-CXXFLAGS=			-g -I $(ROOT)/inc $(WARN) -std=gnu++17
+CXXFLAGS=			-g -I $(ROOT)/inc $(WARN) -std=gnu++17 -Wall -Wextra
 
 LDFLAGS	=			-L /usr/lib/ -lsfml-system -lsfml-graphics -lsfml-window -lcurses -ldl -lstdc++fs
 

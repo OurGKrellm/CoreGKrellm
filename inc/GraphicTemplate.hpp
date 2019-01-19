@@ -48,4 +48,23 @@ private:
     std::vector<std::tuple<sf::Text, Percentage>> _percentages;
 };
 
+class Array : public sf::Drawable, public sf::Transformable {
+public:
+    Array(const std::string &font);
+    ~Array();
+
+    void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
+private:
+    std::vector<std::tuple<std::string, std::vector<std::string>>> map;
+    sf::Font &font;
+};
+
+class TopBar : public sf::Drawable, public sf::Transformable {
+public:
+    TopBar(const std::string &name);
+private:
+    sf::Text nb;
+    sf::Font &font;
+};
+
 #endif /* !GRAPHICTEMPLATE_HPP_ */

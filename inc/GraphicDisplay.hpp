@@ -39,7 +39,7 @@ private:
     void update();
     void drawModules(std::vector<IMonitorModule *> &modules);
 
-    sf::RenderWindow _window;
+    sf::RenderWindow *_window;
     sf::Event _e;
     sf::Font _globalFont;
     DrawableModule _drawableModule;

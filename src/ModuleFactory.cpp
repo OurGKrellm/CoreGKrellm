@@ -9,6 +9,7 @@
 #include "ModuleFactory.hpp"
 
 ModuleFactory::ModuleFactory()
+    : instances()
 {
 }
 

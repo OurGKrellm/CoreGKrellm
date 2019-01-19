@@ -11,11 +11,14 @@ ModuleHandler::ModuleHandler()
     : _modules()
     , _monitors{new GraphicDisplay(), new TextDisplay()}
     , _actualDisplay(_monitors[0])
-{}
+{
+}
 
 ModuleHandler::~ModuleHandler()
 {
-    //TODO: Cleanup _modules.
+    for (auto &elem: _monitors) {
+        delete elem;
+    }
 }
 
 void ModuleHandler::loadModule(const std::string &title)
