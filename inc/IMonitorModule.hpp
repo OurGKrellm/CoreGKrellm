@@ -44,6 +44,8 @@ class IMonitorModule
         virtual Content getContent() = 0;
         virtual std::string getTitle() = 0;
         virtual ModulePosition getPosititon() = 0;
+        virtual IMonitorModule *clone() = 0;
 };
+
 
 #endif //CPP_RUSH3_2018_IMONITORMODULE_HPP

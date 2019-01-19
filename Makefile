@@ -20,12 +20,14 @@ SRC		=			$(SRC_DIR)/main.cpp \
 					$(SRC_DIR)/ModuleHandler.cpp \
 					$(SRC_DIR)/graphic/GraphicDisplay.cpp \
 					$(SRC_DIR)/graphic/Percentage.cpp \
-
+					$(SRC_DIR)/ModuleFactory.cpp \
+					$(SRC_DIR)/text/TextDisplay.cpp \
+					$(SRC_DIR)/Utils.cpp
 
 
 CXXFLAGS=			-g -I $(ROOT)/inc $(WARN) -std=gnu++17
 
-LDFLAGS	=			-L /usr/lib/ -lsfml-system -lsfml-graphics -lsfml-window -lcurses
+LDFLAGS	=			-L /usr/lib/ -lsfml-system -lsfml-graphics -lsfml-window -lcurses -ldl -lstdc++fs
 
 LIB 	?=			1
 
