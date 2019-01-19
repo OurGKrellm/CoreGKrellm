@@ -1,0 +1,7 @@
+CMakeLists.txt
+.vscode
+.idea
+a.out
+cmake-build-debug/
+vgcore.*
+*.o
