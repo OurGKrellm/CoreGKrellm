@@ -15,7 +15,9 @@ NAME	=			MyGKrellm
 
 BUILD	=			$(ROOT)/build
 
-SRC		=
+SRC		=			$(SRC_DIR)/main.cpp \
+					$(SRC_DIR)/Application.cpp \
+					$(SRC_DIR)/ModuleHandler.cpp
 
 CXXFLAGS=			-I $(ROOT)/inc $(WARN) -std=gnu++17
 
