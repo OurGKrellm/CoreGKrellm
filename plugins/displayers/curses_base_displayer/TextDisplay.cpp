@@ -21,7 +21,6 @@ TextDisplay::TextDisplay()
 
 TextDisplay::~TextDisplay()
 {
-    endwin();
 }
 
 
@@ -105,22 +104,6 @@ void TextDisplay::draw(IMonitorModule *module, WINDOW *window)
 
 IMonitorDisplay::State TextDisplay::draw(std::vector<IMonitorModule *> &modules)
 {
-    if (this->window == nullptr) {
-        this->window = initscr();
-        cbreak();
-        noecho();
-        halfdelay(3);
-        curs_set(0);
-        keypad(stdscr, TRUE);
-        start_color();
-        init_pair(0, COLOR_WHITE, COLOR_BLACK);
-        init_pair(1, COLOR_RED, COLOR_RED);
-        init_pair(2, COLOR_YELLOW, COLOR_YELLOW);
-        init_pair(3, COLOR_GREEN, COLOR_GREEN);
-        init_pair(4, COLOR_WHITE, COLOR_RED);
-        init_pair(5, COLOR_WHITE, COLOR_YELLOW);
-        init_pair(6, COLOR_WHITE, COLOR_GREEN);
-    }
     if (this->vectorHash != Utils::hashVector(modules))
         this->vectorHash = remakeWidgets(modules);
     std::hash<IMonitorModule> hashFn;
@@ -148,4 +131,27 @@ IMonitorDisplay::State TextDisplay::draw(std::vector<IMonitorModule *> &modules)
         return (IMonitorDisplay::State::SWITCH);
     }
     return (IMonitorDisplay::State::NONE);
+}
+
+void TextDisplay::loadResources()
+{
+        this->window = initscr();
+        cbreak();
+        noecho();
+        halfdelay(3);
+        curs_set(0);
+        keypad(stdscr, TRUE);
+        start_color();
+        init_pair(0, COLOR_WHITE, COLOR_BLACK);
+        init_pair(1, COLOR_RED, COLOR_RED);
+        init_pair(2, COLOR_YELLOW, COLOR_YELLOW);
+        init_pair(3, COLOR_GREEN, COLOR_GREEN);
+        init_pair(4, COLOR_WHITE, COLOR_RED);
+        init_pair(5, COLOR_WHITE, COLOR_YELLOW);
+        init_pair(6, COLOR_WHITE, COLOR_GREEN);
+}
+
+void TextDisplay::unloadResources()
+{
+    endwin();
 }

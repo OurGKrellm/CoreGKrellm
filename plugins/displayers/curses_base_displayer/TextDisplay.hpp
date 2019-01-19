@@ -16,7 +16,9 @@ class TextDisplay : public IMonitorDisplay {
         TextDisplay();
         ~TextDisplay();
 
+        void loadResources() final;
         State draw(std::vector<IMonitorModule *> &modules) final;
+        void unloadResources() final;
 
     protected:
     private:
