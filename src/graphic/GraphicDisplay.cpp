@@ -12,13 +12,13 @@
 //-------------------- GraphicDisplay ----------------------------
 
 GraphicDisplay::GraphicDisplay()
-    : _window(nullptr)
+    : _window(new sf::RenderWindow(sf::VideoMode(800, 600), "Monitor"))
     , _e()
-    , _globalFont()
-    , _drawableModule(_globalFont)
-    , _wantSwitch(false)
+    , _globalFont(new sf::Font)
+    , _drawableModule(*_globalFont)
+    , _topBar(*_globalFont)
 {
-    if (_globalFont.loadFromFile("./res/deja.ttf") == false) {
+    if (_globalFont->loadFromFile("./res/deja.ttf") == false) {
         throw "Error while loading texture";
     }
 }
@@ -26,11 +26,11 @@ GraphicDisplay::GraphicDisplay()
 GraphicDisplay::GraphicDisplay(unsigned int width, unsigned int height)
     : _window(nullptr)
     , _e()
-    , _globalFont()
-    , _drawableModule(_globalFont)
-    , _wantSwitch(false)
+    , _globalFont(new sf::Font)
+    , _drawableModule(*_globalFont)
+    , _topBar(*_globalFont)
 {
-    if (_globalFont.loadFromFile("./res/deja.ttf") == false)
+    if (_globalFont->loadFromFile("./res/deja.ttf") == false)
         throw "Cannot load ./res/deja.tff";
 }
 
@@ -40,8 +40,6 @@ void GraphicDisplay::handleInput()
         if (_e.type == sf::Event::Closed)
             _window->close();
         if (_e.type == sf::Event::KeyPressed) {
-            if (_e.key.code == sf::Keyboard::Tab)
-                _wantSwitch = true;
             if (_e.key.code == sf::Keyboard::Escape)
                 _window->close();
         }
@@ -50,6 +48,8 @@ void GraphicDisplay::handleInput()
 
 void GraphicDisplay::drawModules(std::vector<IMonitorModule *> &modules)
 {
+    _window->draw(_topBar);
+
     for (auto &elem: modules) {
         _drawableModule.setModule(&*elem);
         _window->draw(_drawableModule);
@@ -59,21 +59,13 @@ void GraphicDisplay::drawModules(std::vector<IMonitorModule *> &modules)
 // Do the graphical draw
 IMonitorDisplay::State GraphicDisplay::draw(std::vector<IMonitorModule *> &modules)
 {
-    if (_window == nullptr)
-        _window = new sf::RenderWindow(sf::VideoMode(800, 600), "Monitor");
     _window->clear();
     handleInput();
     drawModules(modules);
     _window->display();
 
-    if (!_window->isOpen()) {
+    if (!_window->isOpen())
         return State::QUIT;
-    } else if (_wantSwitch) {
-        _wantSwitch = false;
-        delete _window;
-        _window = nullptr;
-        return State::SWITCH;
-    }
     return State::NONE;
 }
 

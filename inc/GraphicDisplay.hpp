@@ -10,6 +10,8 @@
 
 #include "IMonitorDisplay.hpp"
 #include <SFML/Graphics.hpp>
+#include "GraphicTemplate.hpp"
+#include <memory>
 
 class DrawableModule : public sf::Drawable {
 public:
@@ -41,9 +43,9 @@ private:
 
     sf::RenderWindow *_window;
     sf::Event _e;
-    sf::Font _globalFont;
+    sf::Font *_globalFont;
     DrawableModule _drawableModule;
-    bool _wantSwitch;
+    TopBar _topBar;
 };
 
 #endif /* !GRAPHICDISPLAY_HPP_ */
