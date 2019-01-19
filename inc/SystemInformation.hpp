@@ -12,12 +12,16 @@
 
 class SystemInformation : public IMonitorModule
 {
+public:
     SystemInformation();
-    Content UpdateContent() override;
-    std::string getContent() override;
+    void UpdateContent() override;
+    Content getContent() override;
     std::string getTitle() override;
     ModulePosition getPosititon() override;
-
+private:
+    Content _content;
+    std::string _title;
+    ModulePosition _pos;
 };
 
 #endif //CPP_RUSH3_2018_SYSTEMIFORMATION_HPP
