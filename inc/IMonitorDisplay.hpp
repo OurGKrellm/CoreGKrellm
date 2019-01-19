@@ -7,6 +7,8 @@
 #ifndef CPP_RUSH3_2018_IMONITORDISPLAY_HPP
 #define CPP_RUSH3_2018_IMONITORDISPLAY_HPP
 
+#include "IMonitorModule.hpp"
+
 class IMonitorDisplay {
 public:
     virtual void draw(IMonitorModule *module) = 0;
