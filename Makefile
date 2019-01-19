@@ -22,6 +22,7 @@ SRC		=			$(SRC_DIR)/main.cpp \
 					$(SRC_DIR)/ModuleHandler.cpp \
 					$(SRC_DIR)/graphic/GraphicDisplay.cpp \
 					$(SRC_DIR)/graphic/Percentage.cpp \
+					$(SRC_DIR)/graphic/Text.cpp \
 					$(SRC_DIR)/ModuleFactory.cpp \
 					$(SRC_DIR)/text/TextDisplay.cpp \
 					$(SRC_DIR)/Utils.cpp \

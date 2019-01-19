@@ -97,7 +97,7 @@ std::string ProcessorInformation::getCoreUtilisation(std::vector<std::string> ve
 }
 
 ProcessorInformation::ProcessorInformation() :
-        _content({TEXT, ""}),
+        _content({MULTI_PERCENTAGE, ""}),
         _pos({0, 0}),
         _title("Processor Information : ") {
 

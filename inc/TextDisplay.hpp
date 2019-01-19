@@ -21,6 +21,7 @@ class TextDisplay : public IMonitorDisplay {
     protected:
     private:
         std::size_t remakeWidgets(std::vector<IMonitorModule *> &modules);
+        void draw(IMonitorModule *module, WINDOW *window);
         WINDOW *window;
         std::vector<WINDOW *> widgets;
         std::size_t previousHash;

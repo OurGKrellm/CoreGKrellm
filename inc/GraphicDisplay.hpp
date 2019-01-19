@@ -20,13 +20,14 @@ public:
     DrawableModule(sf::Font &font, IMonitorModule *module);
     ~DrawableModule() = default;
 
-    void setModule(IMonitorModule *module);
+    void setup(IMonitorModule *module, sf::Vector2f offset);
     void draw(sf::RenderTarget& target, sf::RenderStates states) const final;
 private:
     IMonitorModule *_module;
     sf::Font &_font;
     sf::RectangleShape _box;
     sf::Text _title;
+    IEntity *_drawable;
 };
 
 class GraphicDisplay : public IMonitorDisplay {

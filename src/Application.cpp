@@ -24,7 +24,6 @@ void Application::loadPlugin(const std::string &str)
     void *handle = dlopen(str.c_str(), RTLD_LAZY);
 
     if (!handle) {
-        std::cout << dlerror() << std::endl;
         throw std::string("Cannot open plugin");
     }
     std::cout << "Loading entrypoint..." << std::endl;
@@ -70,7 +69,6 @@ void Application::setup() noexcept
 
 void Application::run()
 {
-    this->_factory.clone("test");
     while (_isRunning) {
        _isRunning = _handler.handle();
     }

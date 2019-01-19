@@ -1,3 +1,5 @@
+#include <string>
+
 /*
 ** EPITECH PROJECT, 2019
 ** main.cpp
@@ -5,7 +7,8 @@
 ** main
 */
 
-#include "Application.hpp"
+#include <Application.hpp>
+
 
 int main()
 {

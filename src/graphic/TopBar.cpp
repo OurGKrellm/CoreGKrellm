@@ -11,7 +11,7 @@ TopBar::TopBar(sf::Font &font)
     : _font(font)
     , _nb(0)
     , _nbText("0", _font)
-    , _bar(sf::Vector2f(800, 40))
+    , _bar(sf::Vector2f(WIDTH, HEIGHT / 20))
 {
     _nbText.setColor(sf::Color::Black);
 }
@@ -23,4 +23,10 @@ void TopBar::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     target.draw(_bar);
     target.draw(_nbText);
+}
+
+void TopBar::move(sf::Vector2f offset)
+{
+    _bar.move(offset);
+    _bar.move(offset);
 }
