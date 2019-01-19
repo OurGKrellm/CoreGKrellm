@@ -19,7 +19,9 @@ public:
     };
 
     virtual ~IMonitorDisplay() = default;
+    virtual void loadResources() = 0;
     virtual State draw(std::vector<IMonitorModule *> &modules) = 0;
+    virtual void unloadResources() = 0;
 };
 
 #endif //CPP_RUSH3_2018_IMONITORDISPLAY_HPP
