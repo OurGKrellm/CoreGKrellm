@@ -13,6 +13,7 @@
 typedef struct ModulePosition {
     unsigned int x;
     unsigned int y;
+    unsigned int size;
 } ModulePosition;
 
 enum ContentType {
