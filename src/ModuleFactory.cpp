@@ -8,8 +8,13 @@
 #include <iostream>
 #include "ModuleFactory.hpp"
 
+ModuleFactory *ModuleFactory::_singleton = nullptr;
+
 ModuleFactory::ModuleFactory()
+    : instances()
 {
+    if (_singleton == nullptr)
+        _singleton = this;
 }
 
 ModuleFactory::~ModuleFactory()
@@ -53,4 +58,9 @@ std::vector<std::string> ModuleFactory::getNames() const
         names.push_back(temp.first);
     }
     return (names);
+}
+
+ModuleFactory *ModuleFactory::getFactory()
+{
+    return ModuleFactory::_singleton;
 }

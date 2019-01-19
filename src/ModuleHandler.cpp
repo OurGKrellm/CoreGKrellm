@@ -6,16 +6,21 @@
 */
 
 #include "ModuleHandler.hpp"
+#include "ModuleFactory.hpp"
 
 ModuleHandler::ModuleHandler()
     : _modules()
     , _monitors{new GraphicDisplay(), new TextDisplay()}
-    , _actualDisplay(_monitors[0])
-{}
+    , _actualDisplay(_monitors[1])
+    , _monitorIndex(0)
+{
+}
 
 ModuleHandler::~ModuleHandler()
 {
-    //TODO: Cleanup _modules.
+    for (auto &elem: _monitors) {
+        delete elem;
+    }
 }
 
 void ModuleHandler::loadModule(const std::string &title)
@@ -27,13 +32,17 @@ bool ModuleHandler::handle()
 {
     if (_actualDisplay == nullptr)
         return false;
-
+    for (auto temp : _modules) {
+        temp->UpdateContent();
+    }
     auto state = _actualDisplay->draw(_modules);
-
+    
     if (state == IMonitorDisplay::State::QUIT) {
         return false;
     } else if (state == IMonitorDisplay::State::SWITCH) {
-        std::cout << "Should switch." << std::endl;
+        if (_monitorIndex + 1 >= _monitors.size())
+            _monitorIndex = -1;
+        _actualDisplay = _monitors[++_monitorIndex];
     }
     return true;
 }

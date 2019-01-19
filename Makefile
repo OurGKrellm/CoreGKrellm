@@ -24,10 +24,11 @@ SRC		=			$(SRC_DIR)/main.cpp \
 					$(SRC_DIR)/graphic/Percentage.cpp \
 					$(SRC_DIR)/ModuleFactory.cpp \
 					$(SRC_DIR)/text/TextDisplay.cpp \
-					$(SRC_DIR)/Utils.cpp
+					$(SRC_DIR)/Utils.cpp \
+					$(SRC_DIR)/graphic/TopBar.cpp
 
 
-CXXFLAGS=			-g -I $(ROOT)/inc $(WARN) -std=gnu++17 -export-dynamic
+CXXFLAGS=			-g -I $(ROOT)/inc $(WARN) -std=gnu++17 -export-dynamic -Wall -Wextra
 
 LDFLAGS	=			-L /usr/lib/ -lsfml-system -lsfml-graphics -lsfml-window -lcurses -ldl -lstdc++fs -export-dynamic
 

@@ -13,9 +13,9 @@
 
 Application::Application()
     : _handler()
-    , _isRunning(true)
     , _factory(ModuleFactory())
-    , _plugins(std::vector<void *>())
+    , _isRunning(true)
+    , _plugins()
 {}
 
 void Application::loadPlugin(const std::string &str)

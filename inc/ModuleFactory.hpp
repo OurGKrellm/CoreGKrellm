@@ -19,8 +19,10 @@ class ModuleFactory {
         bool registerModule(IMonitorModule *, const std::string &title);
         IMonitorModule *clone(const std::string &title) const;
         std::vector<std::string> getNames() const;
+        static ModuleFactory *getFactory();
 
     private:
+        static ModuleFactory *_singleton;
         std::map<std::string, IMonitorModule *> instances;
 };
 

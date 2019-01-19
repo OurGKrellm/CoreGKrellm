@@ -45,7 +45,7 @@ MultiPercentage::MultiPercentage(const std::string &percent, sf::Font &font)
             if (percent[i] == 0)
                 throw std::exception();
             const char * offset = strchr(percent.data() + i, '%');
-            if (offset = 0) 
+            if (offset == 0) 
                 data = std::string(percent.begin() + i, percent.end());
             else
                 data = std::string(percent.data() + i, offset);

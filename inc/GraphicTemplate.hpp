@@ -6,12 +6,13 @@
 */
 
 #ifndef GRAPHICTEMPLATE_HPP_
-	#define GRAPHICTEMPLATE_HPP_
+    #define GRAPHICTEMPLATE_HPP_
 
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <algorithm>
 #include <cstring>
+
 
 class Camembert : public sf::Drawable, public sf::Transformable {
 public:
@@ -24,6 +25,7 @@ private:
     sf::RectangleShape _back;
     std::vector<sf::RectangleShape> _rectangles;
 };
+
 
 class Percentage : public sf::Drawable, public sf::Transformable {
 public:
@@ -38,6 +40,7 @@ private:
     sf::RectangleShape _front;
 };
 
+
 class MultiPercentage : public sf::Drawable, public sf::Transformable {
 public:
     MultiPercentage(const std::string &percent, sf::Font &font);
@@ -48,14 +51,29 @@ private:
     std::vector<std::tuple<sf::Text, Percentage>> _percentages;
 };
 
+class Array : public sf::Drawable, public sf::Transformable {
+public:
+    Array(const std::string &content, sf::Font &font);
+    ~Array();
 
-class Array : public sf::Drawable, public sf::Transform {
-    public:
-        Array(const std::string &csv, sf::Font &font);
-        ~Array();
-
-        void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
-    private:
-        std::vector<std::tuple<sf::Text, std::vector<sf::Text>>> _array;
+    void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
+private:
+    std::vector<std::tuple<std::string, std::vector<std::string>>> _map;
+    sf::Font &_font;
 };
+
+
+class TopBar : public sf::Drawable, public sf::Transformable {
+public:
+    TopBar(sf::Font &font);
+    ~TopBar();
+
+    void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
+private:
+    sf::Font &_font;
+    int _nb;
+    sf::Text _nbText;
+    sf::RectangleShape _bar;
+};
+
 #endif /* !GRAPHICTEMPLATE_HPP_ */
