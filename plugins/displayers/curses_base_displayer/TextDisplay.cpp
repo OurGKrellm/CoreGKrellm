@@ -153,5 +153,6 @@ void TextDisplay::loadResources()
 
 void TextDisplay::unloadResources()
 {
+    vectorHash = 0;
     endwin();
 }
