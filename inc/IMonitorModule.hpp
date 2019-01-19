@@ -44,6 +44,7 @@ class IMonitorModule
         virtual Content getContent() = 0;
         virtual std::string getTitle() = 0;
         virtual ModulePosition getPosititon() = 0;
+        virtual IMonitorModule *clone() = 0;
 };
 
 

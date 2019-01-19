@@ -40,7 +40,7 @@ bool ModuleFactory::registerModule(IMonitorModule *module, const std::string &ti
 IMonitorModule *ModuleFactory::clone(const std::string &title) const
 {
     try {
-        return this->instances.at(title);
+        return this->instances.at(title)->clone();
     } catch (const std::out_of_range &e) {
         return nullptr;
     }

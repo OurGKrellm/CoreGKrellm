@@ -48,3 +48,4 @@ IMonitorDisplay::State TextDisplay::draw(std::vector<IMonitorModule *> &modules)
     }
     refresh();
     return (IMonitorDisplay::State::NONE);
+}
