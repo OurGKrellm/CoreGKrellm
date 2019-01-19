@@ -47,7 +47,7 @@ IMonitorModule *ModuleFactory::clone(const std::string &title) const
     try {
         return this->instances.at(title)->clone();
     } catch (const std::out_of_range &e) {
-        return nullptr;
+        throw std::runtime_error("No such module, ALORS CA CRASH PUTAIN !");
     }
 }
 
