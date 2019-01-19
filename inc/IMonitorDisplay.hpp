@@ -17,6 +17,7 @@ public:
         SWITCH
     };
 
+    virtual ~IMonitorDisplay() = 0;
     virtual State draw(std::vector<IMonitorModule *> &modules) = 0;
 };
 
