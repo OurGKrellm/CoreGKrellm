@@ -8,10 +8,11 @@
 #define CPP_RUSH3_2018_IMONITORDISPLAY_HPP
 
 #include "IMonitorModule.hpp"
+#include <vector>
 
 class IMonitorDisplay {
 public:
-    virtual void draw(IMonitorModule *module) = 0;
+    virtual void draw(std::vector<IMonitorModule *> modules) = 0;
 };
 
 #endif //CPP_RUSH3_2018_IMONITORDISPLAY_HPP

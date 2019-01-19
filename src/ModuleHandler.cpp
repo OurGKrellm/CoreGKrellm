@@ -9,6 +9,7 @@
 
 ModuleHandler::ModuleHandler()
     : _modules()
+    , _actualDisplay(nullptr)
 {}
 
 ModuleHandler::~ModuleHandler()
@@ -23,7 +24,6 @@ void ModuleHandler::loadModule(const std::string &title)
 
 void ModuleHandler::handle()
 {
-    for (auto &elem: _modules) {
-        _actualDisplay->draw(elem);
-    }
+    if (_actualDisplay != nullptr)
+        _actualDisplay->draw(_modules);
 }
