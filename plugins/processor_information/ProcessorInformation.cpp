@@ -131,4 +131,8 @@ ModulePosition ProcessorInformation::getPosititon() {
     return _pos;
 }
 
+IMonitorModule *ProcessorInformation::clone()
+{
+    return new ProcessorInformation();
+}
 

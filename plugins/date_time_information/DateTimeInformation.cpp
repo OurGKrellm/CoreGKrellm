@@ -35,3 +35,8 @@ std::string DateTimeInformation::getTitle() {
 ModulePosition DateTimeInformation::getPosititon() {
     return _pos;
 }
+
+IMonitorModule *DateTimeInformation::clone()
+{
+    return (new DateTimeInformation());
+}

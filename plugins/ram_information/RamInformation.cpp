@@ -54,3 +54,8 @@ void RamInformation::UpdateContent()
     percent = 100 - percent;
     _content.content = std::to_string(percent);
 }
+
+IMonitorModule *RamInformation::clone()
+{
+    return new RamInformation();
+}

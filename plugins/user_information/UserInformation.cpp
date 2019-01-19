@@ -49,3 +49,8 @@ void UserInformation::UpdateContent()
     _content.content += "@";
     _content.content += hostname.str();
 }
+
+IMonitorModule *UserInformation::clone()
+{
+    return new UserInformation();
+}

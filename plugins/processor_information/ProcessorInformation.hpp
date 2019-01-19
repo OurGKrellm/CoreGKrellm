@@ -18,6 +18,7 @@ public:
     Content getContent() override;
     std::string getTitle() override;
     ModulePosition getPosititon() override;
+    IMonitorModule *clone() override;
 
 private:
     std::vector<std::string> split(const std::string& str, char delim = ' ');

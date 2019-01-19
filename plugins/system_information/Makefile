@@ -7,27 +7,21 @@
 
 ROOT	=			.
 
-SUBDIRS := 			$(wildcard plugins/*/.)
+SRC_DIR	=			.
 
-SRC_DIR	=			src
+CXX		=		g++
 
-CXX		=			g++
-
-NAME	=			MyGKrellm
+NAME	=			../system-module.so
 
 BUILD	=			$(ROOT)/build
 
-SRC		=			$(SRC_DIR)/main.cpp \
-					$(SRC_DIR)/Application.cpp \
-					$(SRC_DIR)/ModuleHandler.cpp \
-					$(SRC_DIR)/ModuleFactory.cpp \
-					$(SRC_DIR)/text/TextDisplay.cpp \
-					$(SRC_DIR)/Utils.cpp
+SRC		=		$(SRC_DIR)/entrypoint.cpp \
+				$(SRC_DIR)/SystemInformation.cpp
 
 
-CXXFLAGS=			-g -I $(ROOT)/inc $(WARN) -std=gnu++17 -export-dynamic
+CXXFLAGS=			-g -I $(ROOT) -I ../../inc $(WARN) -std=gnu++17 -fPIC
 
-LDFLAGS	=			-L /usr/lib/ -lsfml-system -lsfml-graphics -lsfml-window -lcurses -ldl -lstdc++fs -export-dynamic
+LDFLAGS	=			-L -lstdc++fs -shared
 
 LIB 	?=			1
 
@@ -58,9 +52,9 @@ debug:				CXXFLAGS += $(G)
 all:				$(NAME)
 
 $(NAME):			$(OBJS)
-					$(V)printf "$(GREEN)Compile sources.$(WHITE)\n"
-					$(V)$(CXX) -o $(NAME) $(OBJS) $(LDFLAGS)
-					$(V)printf "$(GREEN)Linking obj and Libraries.$(WHITE)\n"
+				$(V)printf "$(GREEN)Compile sources.$(WHITE)\n"
+				$(V)$(CXX) -o $(NAME) $(OBJS) $(LDFLAGS)
+				$(V)printf "$(GREEN)Linking obj and Libraries.$(WHITE)\n"
 
 debug: fclean echo_d $(NAME)
 
@@ -75,16 +69,10 @@ $(BUILD)/%.o:		$(SRC_DIR)/%.cpp
 					$(V)$(CXX) -o $@ -c $< $(CXXFLAGS) $(LDFLAGS)
 
 clean:
-					$(V)for dir in $(SUBDIRS); do \
-        					make --no-print-directory -C $$dir clean; \
-    					done
 					$(V)rm -rf $(OBJS)
 					$(V)printf "$(ORANGE)Removing object files.$(WHITE)\n"
 
 fclean: clean
-					$(V)for dir in $(SUBDIRS); do \
-        					make --no-print-directory -C $$dir fclean; \
-    					done
 					$(V)rm -f $(BUILD)/$(NAME)
 					$(V)rm -f $(ROOT)/$(NAME)
 					$(V)printf "$(ORANGE)Removing binary file.$(WHITE)\n"
@@ -98,9 +86,4 @@ echo_build:
 echo_d:
 					$(V)printf "$(RED)DEBUG MODE initialized.$(WHITE)\n";
 
-plugins:				$(SUBDIRS)
-
-$(SUBDIRS):
-					$(V)make --no-print-directory -C $@
-
-.PHONY: clean fclean debug all re echo_debug buildrepo $(SUBDIRS) plugins
+.PHONY: clean fclean debug all re echo_debug buildrepo
