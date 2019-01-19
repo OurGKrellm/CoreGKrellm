@@ -13,8 +13,8 @@
 
 class DrawableModule : public sf::Drawable {
 public:
-    DrawableModule();
-    DrawableModule(IMonitorModule *module);
+    DrawableModule(sf::Font &font);
+    DrawableModule(sf::Font &font, IMonitorModule *module);
     ~DrawableModule() = default;
 
     void setModule(IMonitorModule *module);
@@ -24,6 +24,7 @@ private:
     void drawText();
     void drawPercentage();
     IMonitorModule *_module;
+    sf::Font &_font;
 };
 
 class GraphicDisplay : public IMonitorDisplay {
@@ -40,7 +41,9 @@ private:
 
     sf::RenderWindow _window;
     sf::Event _e;
+    sf::Font _globalFont;
     DrawableModule _drawableModule;
+    bool _wantSwitch;
 };
 
 #endif /* !GRAPHICDISPLAY_HPP_ */

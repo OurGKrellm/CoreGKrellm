@@ -10,6 +10,8 @@
 
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include <algorithm>
+#include <cstring>
 
 class Camembert : public sf::Drawable, public sf::Transformable {
 public:
@@ -26,23 +28,24 @@ private:
 class Percentage : public sf::Drawable, public sf::Transformable {
 public:
     Percentage(const std::string &percent);
+    Percentage(int percent);
     ~Percentage() = default;
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const final;
 private:
-    int percent;
+    int _percent;
     sf::RectangleShape _back;
     sf::RectangleShape _front;
 };
 
 class MultiPercentage : public sf::Drawable, public sf::Transformable {
 public:
-    MultiPercentage(const std::string &percent);
-    ~MultiPercentage();
+    MultiPercentage(const std::string &percent, sf::Font &font);
+    ~MultiPercentage() = default;
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
 private:
-    std::vector<std::tuple<std::string, Percentage>> _percentages;
+    std::vector<std::tuple<sf::Text, Percentage>> _percentages;
 };
 
 #endif /* !GRAPHICTEMPLATE_HPP_ */
