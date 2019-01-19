@@ -46,4 +46,5 @@ class IMonitorModule
         virtual ModulePosition getPosititon() = 0;
 };
 
+
 #endif //CPP_RUSH3_2018_IMONITORMODULE_HPP
