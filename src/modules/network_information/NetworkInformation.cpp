@@ -16,7 +16,7 @@ NetworkInformation::NetworkInformation()
     , _title("Network Information")
     , _position({0, 0, 0})
     , _folder("/sys/class/net/")
-    , _time_between_each_measure(30)
+    , _time_between_each_measure(0)
     , _counter(0)
 {
 
@@ -48,13 +48,15 @@ Content NetworkInformation::getContent()
 void NetworkInformation::UpdateContent()
 {
     std::string res;
+    std::string interface("Interface,");
+    std::string download("Download,");
+    std::string upload("Upload,");
     unsigned int actual_up;
     unsigned int actual_down;
 
     if (_time_between_each_measure == _counter) {
         _counter = 0;
         _content.content.clear();
-        res += "Interface,Download,Upload\n";
         for (auto it = _networkInterface.begin();
              it != _networkInterface.end(); it++) {
             std::fstream tx(it->tx_file, std::ios::in);
@@ -70,13 +72,18 @@ void NetworkInformation::UpdateContent()
             tx >> tx_bytes;
             actual_down = (unsigned int) std::stol(rx_bytes);
             actual_up = (unsigned int) std::stol(tx_bytes);
-            res += it->interface_name + "," +
-                   std::to_string((actual_down - it->last_rx) / 1000) + "," +
-                   std::to_string((actual_up - it->last_tx) / 1000) + "\n";
+            interface += it->interface_name + ",";
+            download += std::to_string((actual_down - it->last_rx) / 1000) + ",";
+            upload += std::to_string((actual_up - it->last_tx) / 1000) + ",";
             it->last_tx = actual_up;
             it->last_rx = actual_down;
         }
-        _content.content = res;
+        interface[interface.size() - 1] = '\n';
+        download[download.size() - 1] = '\n';
+        upload[upload.size() - 1] = '\n';
+        _content.content += interface;
+        _content.content += download;
+        _content.content += upload;
         return;
     }
     _counter++;
