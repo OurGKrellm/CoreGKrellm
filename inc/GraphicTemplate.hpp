@@ -51,7 +51,6 @@ private:
     std::vector<std::tuple<sf::Text, Percentage>> _percentages;
 };
 
-
 class Array : public sf::Drawable, public sf::Transformable {
 public:
     Array(const std::string &content, sf::Font &font);
@@ -59,7 +58,7 @@ public:
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
 private:
-    std::vector<std::tuple<std::string, std::vector<std::string>>> _map;
+    std::vector<std::tuple<sf::Text, std::vector<sf::Text>>> _map;
     sf::Font &_font;
 };
 
