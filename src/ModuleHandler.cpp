@@ -22,8 +22,17 @@ void ModuleHandler::loadModule(const std::string &title)
     //TODO: Load Modules.
 }
 
-void ModuleHandler::handle()
+bool ModuleHandler::handle()
 {
     if (_actualDisplay != nullptr)
-        _actualDisplay->draw(_modules);
+        return false;
+
+    auto state = _actualDisplay->draw(_modules);
+
+    if (state == IMonitorDisplay::State::QUIT) {
+        return false;
+    } else if (state == IMonitorDisplay::State::SWITCH) {
+        std::cout << "Should switch." << std::endl;
+    }
+    return true;
 }

@@ -17,7 +17,7 @@ public:
     GraphicDisplay(unsigned int width, unsigned int height);
 	~GraphicDisplay() = default;
 
-    bool draw(std::vector<IMonitorModule *> modules) final;
+    bool draw(std::vector<IMonitorModule *> &modules) final;
 private:
     void handleInput();
     void update();

@@ -18,7 +18,6 @@ typedef struct ModulePosition {
 
 enum ContentType {
     CAMEMBERT,
-    DIAGRAMME,
     TEXT,
     PERCENTAGE
 };

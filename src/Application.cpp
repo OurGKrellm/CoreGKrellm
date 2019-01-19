@@ -22,6 +22,6 @@ void Application::run()
     while (_isRunning) {
         // How to get input.
         // How to set _isRunning to false.
-        _handler.handle();
+        _isRunning = _handler.handle();
     }
 }
