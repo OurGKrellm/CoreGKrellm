@@ -23,7 +23,7 @@ SRC		=			$(SRC_DIR)/main.cpp \
 
 CXXFLAGS=			-g -I $(ROOT)/inc /usr/include/  $(WARN) -std=gnu++17
 
-LDFLAGS	=			-L /usr/lib/ -lsfml-system -lsfml-graphics -lsfml-window
+LDFLAGS	=			-L /usr/lib/ -lsfml-system -lsfml-graphics -lsfml-window -lcurses
 
 LIB 	?=			1
 
