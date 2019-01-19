@@ -11,7 +11,7 @@
 ModuleHandler::ModuleHandler()
     : _modules()
     , _monitors{new GraphicDisplay(), new TextDisplay()}
-    , _actualDisplay(_monitors[1])
+    , _actualDisplay(_monitors[0])
     , _monitorIndex(0)
 {
 }

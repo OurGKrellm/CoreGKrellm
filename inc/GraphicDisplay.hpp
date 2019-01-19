@@ -11,6 +11,7 @@
 #include "IMonitorDisplay.hpp"
 #include <SFML/Graphics.hpp>
 #include "GraphicTemplate.hpp"
+#include "ModuleFactory.hpp"
 #include <memory>
 
 class DrawableModule : public sf::Drawable {
@@ -22,22 +23,21 @@ public:
     void setModule(IMonitorModule *module);
     void draw(sf::RenderTarget& target, sf::RenderStates states) const final;
 private:
-    void drawCamembert();
-    void drawText();
-    void drawPercentage();
     IMonitorModule *_module;
     sf::Font &_font;
+    sf::RectangleShape _box;
+    sf::Text _title;
 };
 
 class GraphicDisplay : public IMonitorDisplay {
 public:
     GraphicDisplay();
     GraphicDisplay(unsigned int width, unsigned int height);
-    ~GraphicDisplay() = default;
+    ~GraphicDisplay();
 
     IMonitorDisplay::State draw(std::vector<IMonitorModule *> &modules) final;
 private:
-    void handleInput();
+    void handleInput(std::vector<IMonitorModule *> &modules);
     void update();
     void drawModules(std::vector<IMonitorModule *> &modules);
 
