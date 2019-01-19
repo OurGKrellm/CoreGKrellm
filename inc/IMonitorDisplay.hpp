@@ -12,7 +12,7 @@
 
 class IMonitorDisplay {
 public:
-    virtual void draw(std::vector<IMonitorModule *> modules) = 0;
+    virtual bool draw(std::vector<IMonitorModule *> modules) = 0;
 };
 
 #endif //CPP_RUSH3_2018_IMONITORDISPLAY_HPP
