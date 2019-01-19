@@ -19,8 +19,8 @@ Application::Application()
 
 void Application::setup() noexcept
 {
-    _pluginLoader.loadModules(&_factory);
-    _pluginLoader.loadDisplayers(&_handler);
+    _pluginLoader.loadPlugins<ModuleFactory>(&_factory, std::string("./plugins/modules"));
+    _pluginLoader.loadPlugins<ModuleHandler>(&_handler, std::string("./plugins/displayers"));
     std::cout << "Info: Launching the application." << std::endl;
 }
 
