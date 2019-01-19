@@ -24,7 +24,7 @@ void ModuleHandler::loadModule(const std::string &title)
 
 bool ModuleHandler::handle()
 {
-    if (_actualDisplay != nullptr)
+    if (_actualDisplay == nullptr)
         return false;
 
     auto state = _actualDisplay->draw(_modules);

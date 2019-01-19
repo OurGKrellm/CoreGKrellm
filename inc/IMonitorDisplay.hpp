@@ -14,10 +14,11 @@ class IMonitorDisplay {
 public:
     enum State {
         QUIT,
-        SWITCH
+        SWITCH,
+        NONE
     };
 
-    virtual ~IMonitorDisplay() = 0;
+    virtual ~IMonitorDisplay() = default;
     virtual State draw(std::vector<IMonitorModule *> &modules) = 0;
 };
 
