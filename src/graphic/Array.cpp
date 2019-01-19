@@ -10,7 +10,8 @@
 #include "GraphicTemplate.hpp"
 
 Array::Array(const std::string &csv, sf::Font &font)
-    : _array()
+    : _map()
+    , _font(font)
 {
     unsigned int nbr_line = 0;
 
@@ -36,7 +37,7 @@ Array::Array(const std::string &csv, sf::Font &font)
                 from = csv.find('\n', from);
         }
         from = end_line + 1;
-        _array.push_back(std::tuple(sf::Text(name, font), value));
+        _map.push_back(std::tuple(sf::Text(name, font), value));
     }
 }
 

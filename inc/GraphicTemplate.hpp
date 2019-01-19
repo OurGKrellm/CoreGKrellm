@@ -58,7 +58,7 @@ public:
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
 private:
-    std::vector<std::tuple<std::string, std::vector<std::string>>> _map;
+    std::vector<std::tuple<sf::Text, std::vector<sf::Text>>> _map;
     sf::Font &_font;
 };
 
