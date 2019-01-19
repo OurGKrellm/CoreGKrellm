@@ -40,8 +40,8 @@ class IMonitorModule
 {
     public:
         virtual ~IMonitorModule() = 0;
-        virtual Content UpdateContent() = 0;
-        virtual std::string getContent() = 0;
+        virtual void UpdateContent() = 0;
+        virtual Content getContent() = 0;
         virtual std::string getTitle() = 0;
         virtual ModulePosition getPosititon() = 0;
 };
