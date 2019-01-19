@@ -127,9 +127,12 @@ IMonitorDisplay::State TextDisplay::draw(std::vector<IMonitorModule *> &modules)
         modules.pop_back();
     }
     if (temp == 9) {
-        endwin();
         return (IMonitorDisplay::State::SWITCH);
     }
+    if (temp == 27) {
+        return (IMonitorDisplay::State::QUIT);
+    }
+
     return (IMonitorDisplay::State::NONE);
 }
 
@@ -153,6 +156,6 @@ void TextDisplay::loadResources()
 
 void TextDisplay::unloadResources()
 {
-    vectorHash = 0;
+    vectorHash = -1;
     endwin();
 }
