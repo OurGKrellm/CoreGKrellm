@@ -18,6 +18,7 @@ GraphicDisplay::GraphicDisplay()
     , _globalFont(new sf::Font)
     , _drawableModule(*_globalFont)
     , _topBar(*_globalFont)
+    , _names(std::vector<std::string>({"user", "processor", "network", "ram"}))
 {
     _window->setVisible(true);
     _window->setFramerateLimit(30);
@@ -33,6 +34,7 @@ GraphicDisplay::GraphicDisplay(unsigned int width, unsigned int height)
     , _globalFont(new sf::Font)
     , _drawableModule(*_globalFont)
     , _topBar(*_globalFont)
+    , _names(std::vector<std::string>({"user", "processor", "network", "ram"}))
 {
     _window->setVisible(true);
     _window->setFramerateLimit(30);
@@ -65,6 +67,11 @@ void GraphicDisplay::handleInput(std::vector<IMonitorModule *> &modules)
                 modules.push_back(ModuleFactory::getFactory()->clone("processor"));
             if (_e.key.code == sf::Keyboard::Right && modules.size() > 0)
                 modules.pop_back();
+            if (_e.key.code == sf::Keyboard::D)
+                _names++;
+            if (_e.key.code == sf::Keyboard::A)
+                _names--;
+            std::cout << _names.getSelected() << std::endl;
         }
     }   
 }
@@ -142,7 +149,7 @@ void DrawableModule::setup(IMonitorModule *module, sf::Vector2f offset)
 {
     _module = module;
     _title.setString(_module->getTitle());
-    _title.setScale(sf::Vector2f(0.8, 0.8));
+    _title.setScale(sf::Vector2f(0.5, 0.5));
     _title.setColor(sf::Color::White);
 
     auto string = _module->getContent().content;

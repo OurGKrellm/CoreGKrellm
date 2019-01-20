@@ -17,7 +17,6 @@ Percentage::Percentage(const std::string &percent)
     _front.move(sf::Vector2f(25, 70));
     _front.setFillColor(sf::Color::Green);
     _back.setFillColor(sf::Color::White);
-    std::cout << percent << std::endl;
 }
 
 Percentage::Percentage(int percent)
