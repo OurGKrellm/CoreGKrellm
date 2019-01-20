@@ -21,7 +21,7 @@ ProcessorInformation::ProcessorInformation() :
     _title("Processor Information : "),
     _model(),
     _nbCores(0),
-    _time_between_each_measure(0),
+    _time_between_each_measure(30),
     _counter(0),
     _pos({0, 0})
 {}
