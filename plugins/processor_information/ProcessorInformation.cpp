@@ -13,30 +13,19 @@
 #include <algorithm>
 #include <iterator>
 #include <iostream>
-#include <ProcessorInformation.hpp>
-
 #include "ProcessorInformation.hpp"
 
+ProcessorInformation::ProcessorInformation() :
+    _cpu_info(),
+    _content({ContentType::MULTI_PERCENTAGE, ""}),
+    _title("Processor Information : "),
+    _model(),
+    _nbCores(0),
+    _time_between_each_measure(0),
+    _counter(0),
+    _pos({0, 0})
+{}
 
-
-uint64_t ProcessorInformation::convertFrequency(std::string str) {
-    uint64_t frequency = 0;
-    uint64_t multipliator = 1;
-    if (str.find("GHz") != std::string::npos) {
-        str = str.substr(0, str.find("GHz"));
-        multipliator = 1000000000;
-    } else if (str.find("MHz") != std::string::npos) {
-        str = str.substr(0, str.find("MHz"));
-        multipliator = 1000000;
-    } else if (str.find("KHz") != std::string::npos) {
-        str = str.substr(0, str.find("KHz"));
-        multipliator = 1000;
-    } else if (str.find("Hz") != std::string::npos) {
-        str = str.substr(0, str.find("Hz"));
-    }
-    frequency = static_cast<uint64_t>(std::stod(str) * multipliator);
-    return frequency;
-}
 std::vector<std::string> ProcessorInformation::split(const std::string& str, char delim)
 {
     std::vector<std::string> vec;
@@ -48,7 +37,7 @@ std::vector<std::string> ProcessorInformation::split(const std::string& str, cha
     return vec;
 }
 
-std::string ProcessorInformation::getProcessorName(std::vector<std::string> vector) {
+std::string ProcessorInformation::getProcessorName(std::vector<std::string> &vector) {
     std::string procName = "Unknown Processor";
     for (int i = 0; i < vector.size(); ++i) {
         if (vector[i].find("model name") != std::string::npos) {
@@ -59,64 +48,65 @@ std::string ProcessorInformation::getProcessorName(std::vector<std::string> vect
     return procName;
 }
 
-uint64_t ProcessorInformation::getProcessorFrequency() {
-    uint64_t frequency = 0;
-    std::string frequencyString = "";
-
-    frequencyString = _model.substr(_model.find("@ ")  + 2, _model.length());
-    frequency = convertFrequency(frequencyString);
-    return frequency;
-}
-
-size_t ProcessorInformation::getProcessorNumberOfCore(std::vector<std::string> vector) {
-    std::string procName = "";
-    size_t nbCores = 0;
-    for (int i = 0; i < vector.size(); ++i) {
-        if (vector[i].find("processor") != std::string::npos)
-            nbCores++;
-    }
-    return nbCores;
-}
-
-std::string ProcessorInformation::getCoreUtilisation(std::vector<std::string> vector) {
+std::string ProcessorInformation::getCoreUtilisation(std::vector<std::string> &vector) {
     std::stringstream procName;
     size_t nbCores = 0;
 
-    for (int i = 0; i < vector.size(); ++i) {
-        if (vector[i].find("cpu MHz") != std::string::npos) {
-            double usage = (std::stod(
-                    vector[i].substr(vector[i].find(":") + 2, vector[i].length()))
-                    * 1000000);
-
-            int percentage = static_cast<char>(usage / _frequency * 100);
-            procName << "%" << percentage << ":CPU Core " << nbCores;
-            nbCores++;
+    for (auto it = vector.begin(); it != vector.end(); it++) {
+        std::vector<std::string> cpu_stat = split(*it, ' ');
+        for (auto it_stat = cpu_stat.begin(); it_stat != cpu_stat.end(); it_stat++) {
+            if (*it_stat == "")
+                it_stat = cpu_stat.erase(it_stat);
         }
+        long double loadavg = ((std::stold(cpu_stat[1]) + std::stold(cpu_stat[2])+std::stold(cpu_stat[3])) - (_cpu_info[nbCores].info[0]+_cpu_info[nbCores].info[1]+_cpu_info[nbCores].info[2])) / ((std::stold(cpu_stat[1])+std::stold(cpu_stat[2])+std::stold(cpu_stat[3])+std::stold(cpu_stat[4])) - (_cpu_info[nbCores].info[0] + _cpu_info[nbCores].info[1] + _cpu_info[nbCores].info[2] + _cpu_info[nbCores].info[3]));
+        _cpu_info[nbCores].info[0] = std::stold(cpu_stat[1]);
+        _cpu_info[nbCores].info[1] = std::stold(cpu_stat[2]);
+        _cpu_info[nbCores].info[2] = std::stold(cpu_stat[3]);
+        _cpu_info[nbCores].info[3] = std::stold(cpu_stat[4]);
+        procName << "%" << (int) (loadavg * 100) << ":CPU Core " << nbCores;
+        nbCores++;
     }
     return procName.str();
 }
 
-ProcessorInformation::ProcessorInformation() :
-        _content({TEXT, ""}),
-        _pos({0, 0}),
-        _title("Processor Information : ") {
-
-}
-
-void ProcessorInformation::UpdateContent() {
+void ProcessorInformation::UpdateContent()
+{
     std::stringstream cpuinfo;
+    std::stringstream cpustat;
 
-    _content.content.clear();
-    std::fstream input("/proc/cpuinfo", std::ios::in);
-    if (!input.good())
-        throw std::runtime_error("Cannot open /proc/cpuinfo");
-    cpuinfo << input.rdbuf();
-    std::vector<std::string> info = split(cpuinfo.str(), '\n');
-    _model = getProcessorName(info);
-    _frequency = getProcessorFrequency();
-    _nbCores = getProcessorNumberOfCore(info);
-    _content.content = getCoreUtilisation(info);
-    _title += _model;
+    if (_time_between_each_measure == _counter) {
+        _counter = 0;
+        _content.content.clear();
+        std::fstream input("/proc/cpuinfo", std::ios::in);
+        std::fstream stat("/proc/stat", std::ios::in);
+        if (!input.good())
+            throw std::runtime_error("Cannot open /proc/cpuinfo");
+        if (!stat.good())
+            throw std::runtime_error("Cannot open /proc/stat");
+        cpuinfo << input.rdbuf();
+        cpustat << stat.rdbuf();
+        std::vector<std::string> info = split(cpuinfo.str(), '\n');
+        std::vector<std::string> cpu_stat = split(cpustat.str(), '\n');
+        for (auto it = cpu_stat.begin(); it != cpu_stat.end(); it++) {
+            if (it->find("cpu") != 0) {
+                while (it != cpu_stat.end()) {
+                    it = cpu_stat.erase(it);
+                }
+                break;
+            }
+            if (_nbCores == 0)
+                _cpu_info.push_back(
+                    {"CPU Core " + std::to_string(_cpu_info.size()),
+                     std::array<long double, 4>{0, 0, 0, 0}});
+        }
+        if (_nbCores == 0)
+            _nbCores = cpu_stat.size();
+        _model = getProcessorName(info);
+        _content.content = getCoreUtilisation(cpu_stat);
+        _title += _model;
+        return;
+    }
+    _counter++;
 }
 
 Content ProcessorInformation::getContent() {
