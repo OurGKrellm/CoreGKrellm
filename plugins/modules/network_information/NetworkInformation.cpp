@@ -16,7 +16,7 @@ NetworkInformation::NetworkInformation()
     , _title("Network Information")
     , _position({0, 0, 0})
     , _folder("/sys/class/net/")
-    , _time_between_each_measure(0)
+    , _time_between_each_measure(30)
     , _counter(0)
 {
 
@@ -56,7 +56,6 @@ void NetworkInformation::UpdateContent()
 
     if (_time_between_each_measure == _counter) {
         _counter = 0;
-        _content.content.clear();
         for (auto it = _networkInterface.begin();
              it != _networkInterface.end(); it++) {
             std::fstream tx(it->tx_file, std::ios::in);
@@ -81,6 +80,7 @@ void NetworkInformation::UpdateContent()
         interface[interface.size() - 1] = '\n';
         download[download.size() - 1] = '\n';
         upload[upload.size() - 1] = '\n';
+        _content.content.clear();
         _content.content += interface;
         _content.content += download;
         _content.content += upload;
