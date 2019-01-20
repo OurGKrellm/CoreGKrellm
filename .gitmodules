@@ -1,0 +1,30 @@
+[submodule "plugins/modules/user-information"]
+	path = plugins/modules/user-information
+	url = https://github.com/OurGKrellm/module-user-information
+[submodule "plugins/modules/system-information"]
+	path = plugins/modules/system-information
+	url = https://github.com/OurGKrellm/module-system-information
+[submodule "plugins/modules/processor-information"]
+	path = plugins/modules/processor-information
+	url = https://github.com/OurGKrellm/module-processor-information
+[submodule "plugins/modules/network-information"]
+	path = plugins/modules/network-information
+	url = https://github.com/OurGKrellm/module-network-information
+[submodule "plugins/modules/date-time-information"]
+	path = plugins/modules/date-time-information
+	url = https://github.com/OurGKrellm/module-date-time-information
+[submodule "plugins/modules/ram-information"]
+	path = plugins/modules/ram-information
+	url = https://github.com/OurGKrellm/module-ram-information
+[submodule "plugins/modules/battery-information"]
+	path = plugins/modules/battery-information
+	url = https://github.com/OurGKrellm/module-battery-information
+[submodule "plugins/modules/cpu-information"]
+	path = plugins/modules/cpu-information
+	url = https://github.com/OurGKrellm/module-cpu-temperature
+[submodule "plugins/displayers/sfml-base"]
+	path = plugins/displayers/sfml-base
+	url = https://github.com/OurGKrellm/displayers-sfml-base
+[submodule "plugins/displayers/curses-base"]
+	path = plugins/displayers/curses-base
+	url = https://github.com/OurGKrellm/displayers-curses-base
