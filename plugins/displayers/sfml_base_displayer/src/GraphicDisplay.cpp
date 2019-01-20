@@ -18,7 +18,6 @@ GraphicDisplay::GraphicDisplay()
     , _globalFont(new sf::Font)
     , _drawableModule(*_globalFont)
     , _topBar(*_globalFont)
-    , _names(std::vector<std::string>({"user", "processor", "network", "ram"}))
 {
     _window->setVisible(true);
     _window->setFramerateLimit(30);
@@ -34,7 +33,6 @@ GraphicDisplay::GraphicDisplay(unsigned int width, unsigned int height)
     , _globalFont(new sf::Font)
     , _drawableModule(*_globalFont)
     , _topBar(*_globalFont)
-    , _names(std::vector<std::string>({"user", "processor", "network", "ram"}))
 {
     _window->setVisible(true);
     _window->setFramerateLimit(30);
@@ -59,19 +57,14 @@ void GraphicDisplay::handleInput(std::vector<IMonitorModule *> &modules)
                 _window->close();
             if (_e.key.code == sf::Keyboard::Tab)
                 _wantSwitch = true;
-            if (_e.key.code == sf::Keyboard::Up)
-                modules.push_back(ModuleFactory::getFactory()->clone("network"));
-            if (_e.key.code == sf::Keyboard::Down)
-                modules.push_back(ModuleFactory::getFactory()->clone("ram"));
-            if (_e.key.code == sf::Keyboard::Left)
-                modules.push_back(ModuleFactory::getFactory()->clone("processor"));
-            if (_e.key.code == sf::Keyboard::Right && modules.size() > 0)
+            if (_e.key.code == sf::Keyboard::Delete && modules.size() > 0)
                 modules.pop_back();
             if (_e.key.code == sf::Keyboard::D)
-                _names++;
+                _topBar.getSelector()++;
             if (_e.key.code == sf::Keyboard::A)
-                _names--;
-            std::cout << _names.getSelected() << std::endl;
+                _topBar.getSelector()--;
+            if (_e.key.code == sf::Keyboard::Return)
+                modules.push_back(ModuleFactory::getFactory()->clone(_topBar.getSelector().getSelected()));
         }
     }   
 }
@@ -103,6 +96,8 @@ IMonitorDisplay::State GraphicDisplay::draw(std::vector<IMonitorModule *> &modul
     handleInput(modules);
     drawModules(modules);
     _window->display();
+
+    _topBar.setTextContent(std::to_string(modules.size()));
 
     if (!_window->isOpen()) {
         return State::QUIT;
@@ -167,6 +162,7 @@ void DrawableModule::setup(IMonitorModule *module, sf::Vector2f offset)
     case ContentType::TEXT:
         _drawable = new Text(string, _font);
         dynamic_cast<Text *>(_drawable)->getText().setColor(sf::Color::Blue);
+        dynamic_cast<Text *>(_drawable)->getText().scale(sf::Vector2f(0.4, 0.4));
         break;
     case ContentType::ARRAY:
         _drawable = new Array(string, _font);

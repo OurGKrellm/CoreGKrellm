@@ -10,6 +10,8 @@
 
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include "ModuleFactory.hpp"
+#include "GSelector.hpp"
 #include <algorithm>
 #include <cstring>
 
@@ -96,11 +98,14 @@ public:
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
     void move(sf::Vector2f offset);
+    void setTextContent(const std::string &content) { _nbText.setString(content); }
+    GSelector &getSelector() { return _selector; }
 private:
     sf::Font &_font;
     int _nb;
     sf::Text _nbText;
     sf::RectangleShape _bar;
+    GSelector _selector;
 };
 
 class Text : public IEntity {

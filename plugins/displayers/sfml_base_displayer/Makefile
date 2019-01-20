@@ -20,7 +20,8 @@ SRC		=			$(SRC_DIR)/entrypoint.cpp \
 					$(SRC_DIR)/GraphicDisplay.cpp \
 					$(SRC_DIR)/Percentage.cpp \
 					$(SRC_DIR)/Text.cpp \
-					$(SRC_DIR)/TopBar.cpp
+					$(SRC_DIR)/TopBar.cpp \
+					$(SRC_DIR)/GSelector.cpp
 
 
 CXXFLAGS=			-g -I ./inc/ -I ../../../inc $(WARN) -std=gnu++17 -fPIC
