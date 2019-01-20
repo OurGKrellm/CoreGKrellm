@@ -12,7 +12,7 @@
 #include "NetworkInformation.hpp"
 
 NetworkInformation::NetworkInformation()
-    : _content({ContentType::PERCENTAGE, ""})
+    : _content({ContentType::ARRAY, ""})
     , _title("Network Information")
     , _position({0, 0, 0})
     , _folder("/sys/class/net/")
@@ -87,4 +87,9 @@ void NetworkInformation::UpdateContent()
         return;
     }
     _counter++;
+}
+
+IMonitorModule *NetworkInformation::clone()
+{
+    return new NetworkInformation();
 }
