@@ -23,7 +23,7 @@ SRC		=		$(SRC_DIR)/entrypoint.cpp \
 
 CXXFLAGS=			-g -I $(ROOT) -I ../../../inc $(WARN) -std=gnu++17 -fPIC
 
-LDFLAGS	=			-L -lstdc++fs -shared
+LDFLAGS	=			-L -lstdc++fs -shared -lcurses
 
 LIB 	?=			1
 

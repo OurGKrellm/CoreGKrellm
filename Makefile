@@ -28,7 +28,7 @@ SRC		=			$(SRC_DIR)/main.cpp \
 
 CXXFLAGS=			-g -I $(ROOT)/inc $(WARN) -std=gnu++17 -export-dynamic -Wall -Wextra
 
-LDFLAGS	=			-L /usr/lib/ -lsfml-system -lsfml-graphics -lsfml-window -lcurses -ldl -lstdc++fs -export-dynamic
+LDFLAGS	=			-ldl -lstdc++fs -export-dynamic
 
 LIB 	?=			1
 

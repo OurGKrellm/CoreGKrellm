@@ -26,7 +26,7 @@ SRC		=			$(SRC_DIR)/entrypoint.cpp \
 
 CXXFLAGS=			-g -I ./inc/ -I ../../../inc $(WARN) -std=gnu++17 -fPIC
 
-LDFLAGS	=			-L -lstdc++fs -shared
+LDFLAGS	=			-L -lstdc++fs -shared -L /usr/lib -lsfml-system -lsfml-graphics -lsfml-window
 
 LIB 	?=			1
 
