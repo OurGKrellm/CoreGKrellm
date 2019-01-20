@@ -19,6 +19,7 @@ GraphicDisplay::GraphicDisplay()
     , _drawableModule(*_globalFont)
     , _topBar(*_globalFont)
 {
+    _window->setVisible(true);
     if (_globalFont->loadFromFile("./res/deja.ttf") == false) {
         throw "Error while loading texture";
     }
@@ -31,6 +32,7 @@ GraphicDisplay::GraphicDisplay(unsigned int width, unsigned int height)
     , _drawableModule(*_globalFont)
     , _topBar(*_globalFont)
 {
+    _window->setVisible(true);
     if (_globalFont->loadFromFile("./res/deja.ttf") == false)
         throw "Cannot load ./res/deja.tff";
 }
@@ -49,12 +51,14 @@ void GraphicDisplay::handleInput(std::vector<IMonitorModule *> &modules)
         if (_e.type == sf::Event::KeyPressed) {
             if (_e.key.code == sf::Keyboard::Escape)
                 _window->close();
+            if (_e.key.code == sf::Keyboard::Tab)
+                _wantSwitch = true;
             if (_e.key.code == sf::Keyboard::Up)
                 modules.push_back(ModuleFactory::getFactory()->clone("user"));
             if (_e.key.code == sf::Keyboard::Down)
                 modules.push_back(ModuleFactory::getFactory()->clone("ram"));
-            if (_e.key.code == sf::Keyboard::Left && modules.size() > 0)
-                modules.pop_back();
+            if (_e.key.code == sf::Keyboard::Left)
+                modules.push_back(ModuleFactory::getFactory()->clone("processor"));
             if (_e.key.code == sf::Keyboard::Right && modules.size() > 0)
                 modules.pop_back();
         }
@@ -88,11 +92,24 @@ IMonitorDisplay::State GraphicDisplay::draw(std::vector<IMonitorModule *> &modul
     handleInput(modules);
     drawModules(modules);
     _window->display();
-    if (!_window->isOpen())
+    if (!_window->isOpen()) {
         return State::QUIT;
+    } else if (_wantSwitch) {
+        _wantSwitch = false;
+        return State::SWITCH;
+    }
     return State::NONE;
 }
 
+void GraphicDisplay::unloadResources()
+{
+    _window->setVisible(false);
+}
+
+void GraphicDisplay::loadResources()
+{
+    _window->setVisible(true);
+}
 
 //-------------------- DrawableModule --------------------------
 

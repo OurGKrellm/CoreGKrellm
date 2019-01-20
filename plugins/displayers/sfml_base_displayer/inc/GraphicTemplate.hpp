@@ -45,6 +45,8 @@ public:
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const final;
     void move(sf::Vector2f offset);
+    void scale(sf::Vector2f offset);
+    void setPosition(sf::Vector2f position);
 private:
     int _percent;
     sf::RectangleShape _back;
@@ -66,7 +68,7 @@ private:
 class Array : public IEntity {
 public:
     Array(const std::string &content, sf::Font &font);
-    ~Array();
+    ~Array() = default;
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
     void move(sf::Vector2f offset);

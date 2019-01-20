@@ -36,6 +36,8 @@ public:
     GraphicDisplay(unsigned int width, unsigned int height);
     ~GraphicDisplay();
 
+    void loadResources() final;
+    void unloadResources() final;
     IMonitorDisplay::State draw(std::vector<IMonitorModule *> &modules) final;
 private:
     void handleInput(std::vector<IMonitorModule *> &modules);
@@ -47,6 +49,7 @@ private:
     sf::Font *_globalFont;
     DrawableModule _drawableModule;
     TopBar _topBar;
+    bool _wantSwitch;
 };
 
 #endif /* !GRAPHICDISPLAY_HPP_ */

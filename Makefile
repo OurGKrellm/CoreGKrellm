@@ -22,12 +22,8 @@ SRC		=			$(SRC_DIR)/main.cpp \
 					$(SRC_DIR)/Application.cpp \
 					$(SRC_DIR)/ModuleHandler.cpp \
 					$(SRC_DIR)/PluginLoader.cpp \
-					$(SRC_DIR)/graphic/GraphicDisplay.cpp \
-					$(SRC_DIR)/graphic/Percentage.cpp \
-					$(SRC_DIR)/graphic/Text.cpp \
 					$(SRC_DIR)/ModuleFactory.cpp \
 					$(SRC_DIR)/Utils.cpp \
-					$(SRC_DIR)/graphic/TopBar.cpp
 
 
 CXXFLAGS=			-g -I $(ROOT)/inc $(WARN) -std=gnu++17 -export-dynamic -Wall -Wextra

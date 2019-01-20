@@ -48,4 +48,5 @@ void Array::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
 void Array::move(sf::Vector2f offset)
 {
+
 }
