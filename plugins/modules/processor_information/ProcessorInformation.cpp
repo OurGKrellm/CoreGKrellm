@@ -22,7 +22,7 @@ ProcessorInformation::ProcessorInformation() :
     _model(),
     _nbCores(0),
     _time_between_each_measure(30),
-    _counter(0),
+    _counter(30),
     _pos({0, 0})
 {}
 
