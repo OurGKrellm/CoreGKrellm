@@ -34,6 +34,7 @@ GraphicDisplay::GraphicDisplay(unsigned int width, unsigned int height)
     , _globalFont(new sf::Font)
     , _drawableModule(*_globalFont)
     , _topBar(*_globalFont)
+    , _names(std::vector<std::string>({"user", "processor", "network", "ram"}))
 {
     _window->setVisible(true);
     _window->setFramerateLimit(30);
@@ -66,6 +67,11 @@ void GraphicDisplay::handleInput(std::vector<IMonitorModule *> &modules)
                 modules.push_back(ModuleFactory::getFactory()->clone("processor"));
             if (_e.key.code == sf::Keyboard::Right && modules.size() > 0)
                 modules.pop_back();
+            if (_e.key.code == sf::Keyboard::D)
+                _names++;
+            if (_e.key.code == sf::Keyboard::A)
+                _names--;
+            std::cout << _names.getSelected() << std::endl;
         }
     }   
 }

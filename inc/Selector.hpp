@@ -31,12 +31,16 @@ public:
 
     Selector &operator--(int)
     {
-        std::rotate(_internal.end(), _internal.end() - 1, _internal.begin());
+        std::reverse(_internal.begin(), _internal.end());
+        std::rotate(_internal.begin(), _internal.begin() + 1, _internal.end());
+        std::reverse(_internal.begin(), _internal.end());
     }
 
     Selector &operator--()
     {
-        std::rotate(_internal.end(), _internal.end() + 1, _internal.begin());
+        std::reverse(_internal.begin(), _internal.end());
+        std::rotate(_internal.begin(), _internal.begin() + 1, _internal.end());
+        std::reverse(_internal.begin(), _internal.end());
     }
 
     const T &getSelected() const
