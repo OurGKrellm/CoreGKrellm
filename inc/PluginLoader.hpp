@@ -52,7 +52,7 @@ class PluginLoader {
             void *handle = dlopen(str.c_str(), RTLD_LAZY);
 
             if (!handle) {
-                throw std::string("Cannot open plugin");
+                throw std::string("Cannot open plugin") + std::string(dlerror());
             }
             std::cout << "Loading entrypoint..." << std::endl;
             dlerror();
