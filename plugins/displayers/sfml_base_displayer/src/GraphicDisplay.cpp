@@ -20,6 +20,8 @@ GraphicDisplay::GraphicDisplay()
     , _topBar(*_globalFont)
 {
     _window->setVisible(true);
+    _window->setFramerateLimit(30);
+    _window->clear();
     if (_globalFont->loadFromFile("./res/deja.ttf") == false) {
         throw "Error while loading texture";
     }
@@ -33,6 +35,8 @@ GraphicDisplay::GraphicDisplay(unsigned int width, unsigned int height)
     , _topBar(*_globalFont)
 {
     _window->setVisible(true);
+    _window->setFramerateLimit(30);
+    _window->clear();
     if (_globalFont->loadFromFile("./res/deja.ttf") == false)
         throw "Cannot load ./res/deja.tff";
 }
@@ -92,6 +96,7 @@ IMonitorDisplay::State GraphicDisplay::draw(std::vector<IMonitorModule *> &modul
     handleInput(modules);
     drawModules(modules);
     _window->display();
+
     if (!_window->isOpen()) {
         return State::QUIT;
     } else if (_wantSwitch) {
@@ -166,7 +171,7 @@ void DrawableModule::setup(IMonitorModule *module, sf::Vector2f offset)
     };
     _box.setPosition(offset);
     _title.setPosition(offset);
-    _drawable->move(offset + sf::Vector2f(0, 80));
+    _drawable->move(offset + sf::Vector2f(0, HEIGHT / 20));
  
 }
 

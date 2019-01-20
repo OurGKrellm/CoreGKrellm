@@ -23,7 +23,7 @@ Percentage::Percentage(const std::string &percent)
 Percentage::Percentage(int percent)
     : _percent(percent)
     , _back(sf::Vector2<float>(200, 20))
-    , _front(sf::Vector2<float>(_percent, 20))
+    , _front(sf::Vector2<float>(_percent * 2, 20))
 {
     _back.move(sf::Vector2f(25, 70));
     _front.move(sf::Vector2f(25, 70));
@@ -67,7 +67,6 @@ MultiPercentage::MultiPercentage(const std::string &percent, sf::Font &font)
     for (size_t i = 0; percent[i]; ++i) {
         if (percent[i] == '%') {
             int nb = atoi(percent.data() + i + 1);
-            std::cout << "nb: " << nb << std::endl;
             while (percent[i] != ':' && percent[i] != 0)
                 i++;
             if (percent[i] == 0)
@@ -82,7 +81,7 @@ MultiPercentage::MultiPercentage(const std::string &percent, sf::Font &font)
             sf::Text text(data, font);
 
             perc.setPosition(sf::Vector2f(0.0, 0.0));
-            perc.move(sf::Vector2f(20, offsetY * index + 10));
+            perc.move(sf::Vector2f(20, offsetY * index + 20));
             text.move(sf::Vector2f(10, offsetY * index));
             perc.scale(sf::Vector2f(0.5, 0.5));
             text.scale(sf::Vector2f(0.5, 0.5));

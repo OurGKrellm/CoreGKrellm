@@ -16,7 +16,9 @@ NAME	=			../curses-base.so
 BUILD	=			$(ROOT)/build
 
 SRC		=		$(SRC_DIR)/entrypoint.cpp \
-				$(SRC_DIR)/TextDisplay.cpp
+				$(SRC_DIR)/TextDisplay.cpp \
+				$(SRC_DIR)/Drawers.cpp      \
+				$(SRC_DIR)/Widget.cpp
 
 
 CXXFLAGS=			-g -I $(ROOT) -I ../../../inc $(WARN) -std=gnu++17 -fPIC
