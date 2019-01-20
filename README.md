@@ -6,6 +6,5 @@ Core application that displays [modules] on [displayers]
 ```
 git clone https://github.com/OurGKrellm/CoreGKrellm --recurse-submodules -j8
 cd CoreGKrellm
-make release
 sudo make install
 ```
