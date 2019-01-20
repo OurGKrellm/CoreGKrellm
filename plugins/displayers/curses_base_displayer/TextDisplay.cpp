@@ -75,6 +75,7 @@ void TextDisplay::createModule(std::vector<IMonitorModule *> &modules)
     } catch (const std::runtime_error &e) {
         return;
     }
+    timeout(33);
     wclear(this->window);
     vectorHash = -1;
 }

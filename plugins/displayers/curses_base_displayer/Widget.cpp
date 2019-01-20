@@ -28,7 +28,7 @@ void Widget::draw()
 {
     std::hash<IMonitorModule> hashFn;
 
-    this->module->UpdateContent();
+    if (previousHash != hashFn(*this->module)) {
             wclear(this->window);
             if (isSelected)
                 wattron(this->window, COLOR_PAIR(4));
@@ -40,7 +40,7 @@ void Widget::draw()
             drawModule(module, this->window);
             wrefresh(this->window);
             previousHash = hashFn(*module);
-
+    }
 }
 
 void Widget::drawModule(IMonitorModule *module, WINDOW *window)
