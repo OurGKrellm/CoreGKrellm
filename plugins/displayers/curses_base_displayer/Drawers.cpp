@@ -52,3 +52,29 @@ void Drawers::printPercentage(const Widget &widget, int start_y, int start_x, co
     if (toPrintPercentage <= char_to_print)
         wattroff(widget.getWindow(), COLOR_PAIR(colorPair + 3));
 }
+
+
+void Drawers::printMultiPercentage(const Widget &widget, int start_y, int start_x, const std::string &str)
+{
+    int i = 0;
+    std::stringstream ss(str);
+    std::string toPrint;
+
+    while (std::getline(ss, toPrint, '%')) {
+        if (toPrint.size() != 0) {
+            printPercentage(widget, start_y + (i * 2), start_x, toPrint.c_str());
+            i++;
+        }
+    }
+}
+
+void Drawers::printArray(const Widget &widget, int start_y, int start_x, const std::string &str)
+{
+    
+    mvwaddstr(widget.getWindow(), start_y, start_x, str.c_str());
+}
+
+void Drawers::printCamenbert(const Widget &widget, int start_y, int start_x, const std::string &str)
+{
+    printMultiline(widget, start_y, start_x, "Not implemented\nswitch to another backend !");
+}
