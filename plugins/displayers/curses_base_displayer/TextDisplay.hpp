@@ -23,12 +23,15 @@ class TextDisplay : public IMonitorDisplay {
 
     protected:
     private:
+        void createModule(std::vector<IMonitorModule *> &modules);
         std::size_t remakeWidgets(std::vector<IMonitorModule *> &modules);
         void draw(IMonitorModule *module, WINDOW *window);
+        void eventHandler(int key, std::vector<IMonitorModule *> &modules);
         WINDOW *window;
         std::vector<Widget *> widgets;
         std::vector<std::size_t> previousHashes;
         std::size_t vectorHash;
+        int selected;
 };
 
 #endif /* !TEXTDISPLAY_HPP_ */

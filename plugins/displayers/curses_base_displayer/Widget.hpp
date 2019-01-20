@@ -20,6 +20,7 @@ class Widget {
         int getWidth() const { return WIDGET_W; }
         int getHeigth() const { return WIDGET_H; }
         WINDOW *getWindow() const { return window; }
+        void setSelected(bool isSelected);
 
         void draw();
 
@@ -29,6 +30,7 @@ class Widget {
         WINDOW *window;
         std::size_t previousHash;
         IMonitorModule *module;
+        bool isSelected;
         const static int WIDGET_W = 53;
         const static int WIDGET_H = 17;
 };

@@ -12,6 +12,7 @@
 
 Widget::Widget(IMonitorModule *module, WINDOW *baseWindow, int posX, int posY)
  : module(module)
+ , isSelected(false)
 {
     this->window = subwin(baseWindow, WIDGET_H, WIDGET_W, posY * WIDGET_H, posX * WIDGET_W);
 }
@@ -29,9 +30,13 @@ void Widget::draw()
 
     if (previousHash != hashFn(*module)) {
             wclear(this->window);
+            if (isSelected)
+                wattron(this->window, COLOR_PAIR(4));
             wborder(this->window, '|', '|', '-', '-', '+', '+', '+', '+');
-            mvwaddstr(this->window, 1, 1, module->getTitle().c_str());
             mvwaddstr(this->window, 2, 0, "+---------------------------------------------------+");
+            if (isSelected)
+                wattroff(this->window, COLOR_PAIR(4));
+            mvwaddstr(this->window, 1, 1, module->getTitle().c_str());
             drawModule(module, this->window);
             wrefresh(this->window);
             previousHash = hashFn(*module);
@@ -48,4 +53,10 @@ void Widget::drawModule(IMonitorModule *module, WINDOW *window)
             Drawers::printPercentage(*this, 7, 1, module->getContent().content.c_str());
             break;
     }
+}
+
+void Widget::setSelected(bool isSelected)
+{
+    this->isSelected = isSelected;
+    this->previousHash = 0;
 }
