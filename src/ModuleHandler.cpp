@@ -10,39 +10,45 @@
 
 ModuleHandler::ModuleHandler()
     : _modules()
-    , _monitors{new TextDisplay()}
-    , _actualDisplay(_monitors[0])
+    , _monitors()
+    , _actualDisplay(nullptr)
     , _monitorIndex(0)
 {
 }
 
-ModuleHandler::~ModuleHandler()
+void ModuleHandler::loadDisplayer(IMonitorDisplay *display)
 {
-    for (auto &elem: _monitors) {
-        delete elem;
-    }
+    _monitors.push_back(display);
 }
 
-void ModuleHandler::loadModule(const std::string &title)
+ModuleHandler::~ModuleHandler()
 {
-    //TODO: Load Modules.
 }
 
 bool ModuleHandler::handle()
 {
-    if (_actualDisplay == nullptr)
+    if (_actualDisplay == nullptr && _monitors.size() == 0)
         return false;
+    else if (_actualDisplay == nullptr && _monitors.size() != 0) {
+        _actualDisplay = _monitors[0];
+        _actualDisplay->loadResources();
+    }
+
     for (auto temp : _modules) {
         temp->UpdateContent();
     }
+
     auto state = _actualDisplay->draw(_modules);
     
     if (state == IMonitorDisplay::State::QUIT) {
+        _actualDisplay->unloadResources();
         return false;
     } else if (state == IMonitorDisplay::State::SWITCH) {
         if (_monitorIndex + 1 >= _monitors.size())
             _monitorIndex = -1;
+        _actualDisplay->unloadResources();
         _actualDisplay = _monitors[++_monitorIndex];
+        _actualDisplay->loadResources();
     }
     return true;
 }

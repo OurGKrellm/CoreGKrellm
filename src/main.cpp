@@ -1,5 +1,3 @@
-#include <string>
-
 /*
 ** EPITECH PROJECT, 2019
 ** main.cpp
@@ -8,12 +6,9 @@
 */
 
 #include <Application.hpp>
-
-
 int main()
 {
     Application app;
-
     app.setup();
     app.run();
     return 0;

@@ -45,9 +45,15 @@ bool ModuleFactory::registerModule(IMonitorModule *module, const std::string &ti
 IMonitorModule *ModuleFactory::clone(const std::string &title) const
 {
     try {
-        return this->instances.at(title)->clone();
+        auto a = this->instances.at(title)->clone();
+        try {
+            a->UpdateContent();
+        } catch(const std::runtime_error &e) {
+            std::cout << e.what() << std::endl;
+        }
+        return a;
     } catch (const std::out_of_range &e) {
-        throw std::runtime_error("No such module, ALORS CA CRASH PUTAIN !");
+        throw std::runtime_error("No such module");
     }
 }
 

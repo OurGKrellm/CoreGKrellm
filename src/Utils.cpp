@@ -7,7 +7,7 @@
 
 #include "Utils.hpp"
 
-std::size_t Utils::hash(std::vector<IMonitorModule *> const &modules)
+std::size_t Utils::hashVector(std::vector<IMonitorModule *> const &modules)
 {
     std::size_t seed = modules.size();
     for(auto& i : modules) {
@@ -15,3 +15,4 @@ std::size_t Utils::hash(std::vector<IMonitorModule *> const &modules)
     }
     return seed;
 }
+

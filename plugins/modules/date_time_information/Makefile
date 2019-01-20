@@ -11,15 +11,15 @@ SRC_DIR	=			.
 
 CXX		=		g++
 
-NAME	=			../user-module.so
+NAME	=			../date_time_module.so
 
 BUILD	=			$(ROOT)/build
 
 SRC		=		$(SRC_DIR)/entrypoint.cpp \
-				$(SRC_DIR)/UserInformation.cpp
+				$(SRC_DIR)/DateTimeInformation.cpp
 
 
-CXXFLAGS=			-g -I $(ROOT) -I ../../inc $(WARN) -std=gnu++17 -fPIC
+CXXFLAGS=			-g -I $(ROOT) -I ../../../inc $(WARN) -std=gnu++17 -fPIC
 
 LDFLAGS	=			-L -lstdc++fs -shared
 

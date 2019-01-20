@@ -12,21 +12,21 @@
 #include <iostream>
 #include "IMonitorModule.hpp"
 #include "IMonitorDisplay.hpp"
-#include "GraphicDisplay.hpp"
-#include "TextDisplay.hpp"
 
 class ModuleHandler {
 public:
 	ModuleHandler();
 	~ModuleHandler();
 
-    void loadModule(const std::string &title);
+    void loadDisplayer(IMonitorDisplay *);
     bool handle();
 private:
     std::vector<IMonitorModule *> _modules;
     std::vector<IMonitorDisplay *> _monitors;
     IMonitorDisplay *_actualDisplay;
-    int _monitorIndex;
+    std::size_t _monitorIndex;
 };
+
+typedef void (*entrypoint_displayer_t)(ModuleHandler *);
 
 #endif /* !MODULEHANDLER_HPP_ */

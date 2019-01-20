@@ -9,6 +9,7 @@
 #define CPP_RUSH3_2018_IMONITORMODULE_HPP
 
 #include <string>
+#include <functional>
 
 typedef struct ModulePosition {
     unsigned int x;
@@ -20,7 +21,8 @@ enum ContentType {
     CAMEMBERT,
     TEXT,
     PERCENTAGE,
-    MULTI_PERCENTAGE//Format Content.content = "%25:CPU 1%34:CPU 2" -> 2 pourcentages, 25% titre 'CPU 1', 34% titre 'CPU 2'
+    MULTI_PERCENTAGE,//Format Content.content = "%25:CPU 1%34:CPU 2" -> 2 pourcentages, 25% titre 'CPU 1', 34% titre 'CPU 2'
+    ARRAY
 };
 
 typedef struct Content {
@@ -48,5 +50,14 @@ class IMonitorModule
         virtual IMonitorModule *clone() = 0;
 };
 
+namespace std {
+    template<>
+    struct hash<IMonitorModule> {
+        size_t operator()(IMonitorModule &module) const {
+            std::hash<std::string> hashFn;
+            return hashFn(module.getContent().content);
+        }
+    };
+}
 
 #endif //CPP_RUSH3_2018_IMONITORMODULE_HPP

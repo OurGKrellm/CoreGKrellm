@@ -7,12 +7,13 @@
 
 #include "GraphicDisplay.hpp"
 #include "GraphicTemplate.hpp"
+
 #include <iostream>
 
 //-------------------- GraphicDisplay ----------------------------
 
 GraphicDisplay::GraphicDisplay()
-    : _window(new sf::RenderWindow(sf::VideoMode(800, 600), "Monitor"))
+    : _window(new sf::RenderWindow(sf::VideoMode(WIDTH, HEIGHT), "Monitor"))
     , _e()
     , _globalFont(new sf::Font)
     , _drawableModule(*_globalFont)
@@ -24,7 +25,7 @@ GraphicDisplay::GraphicDisplay()
 }
 
 GraphicDisplay::GraphicDisplay(unsigned int width, unsigned int height)
-    : _window(nullptr)
+    : _window(new sf::RenderWindow(sf::VideoMode(width, height), "Monitor"))
     , _e()
     , _globalFont(new sf::Font)
     , _drawableModule(*_globalFont)
@@ -34,7 +35,13 @@ GraphicDisplay::GraphicDisplay(unsigned int width, unsigned int height)
         throw "Cannot load ./res/deja.tff";
 }
 
-void GraphicDisplay::handleInput()
+GraphicDisplay::~GraphicDisplay()
+{
+    delete _window;
+    delete _globalFont;
+}
+
+void GraphicDisplay::handleInput(std::vector<IMonitorModule *> &modules)
 {
     while (_window->pollEvent(_e)) {
         if (_e.type == sf::Event::Closed)
@@ -42,6 +49,14 @@ void GraphicDisplay::handleInput()
         if (_e.type == sf::Event::KeyPressed) {
             if (_e.key.code == sf::Keyboard::Escape)
                 _window->close();
+            if (_e.key.code == sf::Keyboard::Up)
+                modules.push_back(ModuleFactory::getFactory()->clone("user"));
+            if (_e.key.code == sf::Keyboard::Down)
+                modules.push_back(ModuleFactory::getFactory()->clone("ram"));
+            if (_e.key.code == sf::Keyboard::Left && modules.size() > 0)
+                modules.pop_back();
+            if (_e.key.code == sf::Keyboard::Right && modules.size() > 0)
+                modules.pop_back();
         }
     }   
 }
@@ -49,9 +64,19 @@ void GraphicDisplay::handleInput()
 void GraphicDisplay::drawModules(std::vector<IMonitorModule *> &modules)
 {
     _window->draw(_topBar);
+    size_t index = 0;
+    size_t indey = 0;
+    size_t cnt = 0;
+    float x = 251;
+    float y = 251;
 
     for (auto &elem: modules) {
-        _drawableModule.setModule(&*elem);
+        _drawableModule.setup(&*elem, sf::Vector2f(x * index, y * indey + (HEIGHT / 20)));
+        index++;
+        if (index == 4) {
+            index = 0;
+            indey++;
+        }
         _window->draw(_drawableModule);
     }
 }
@@ -60,10 +85,9 @@ void GraphicDisplay::drawModules(std::vector<IMonitorModule *> &modules)
 IMonitorDisplay::State GraphicDisplay::draw(std::vector<IMonitorModule *> &modules)
 {
     _window->clear();
-    handleInput();
+    handleInput(modules);
     drawModules(modules);
     _window->display();
-
     if (!_window->isOpen())
         return State::QUIT;
     return State::NONE;
@@ -75,35 +99,64 @@ IMonitorDisplay::State GraphicDisplay::draw(std::vector<IMonitorModule *> &modul
 DrawableModule::DrawableModule(sf::Font &font)
     : _module(nullptr)
     , _font(font)
-{}
+    , _box(sf::Vector2f(250, 250))
+    , _title("sample", _font)
+{
+    _box.setFillColor(sf::Color(0xaaaaaaff));
+    _title.setColor(sf::Color::Blue);
+}
 
 DrawableModule::DrawableModule(sf::Font &font, IMonitorModule *module)
     : _module(module)
     , _font(font)
-{}
-
-void DrawableModule::setModule(IMonitorModule *module)
+    , _box(sf::Vector2f(250, 250))
+    , _title("sample", _font)
 {
-    _module = module;
+    _box.setFillColor(sf::Color::Green);
+    _title.setColor(sf::Color::Blue);
 }
 
-void DrawableModule::draw(sf::RenderTarget &target, sf::RenderStates states) const
+void DrawableModule::setup(IMonitorModule *module, sf::Vector2f offset)
 {
-    sf::Drawable *drawable;
+    _module = module;
+    _title.setString(_module->getTitle());
+    _title.setScale(sf::Vector2f(0.8, 0.8));
+    _title.setColor(sf::Color::White);
+
+    auto string = _module->getContent().content;
 
     switch (_module->getContent().contentType) {
     case ContentType::CAMEMBERT:
         //drawable = new Camembert();
         break;
     case ContentType::PERCENTAGE:
-        drawable = new Percentage(_module->getContent().content);
+        _drawable = new Percentage(string);
+        break;
+    case ContentType::MULTI_PERCENTAGE:
+        _drawable = new MultiPercentage(string, _font);
         break;
     case ContentType::TEXT:
-        drawable = new sf::Text(_module->getContent().content, _font);
+        _drawable = new Text(string, _font);
+        dynamic_cast<Text *>(_drawable)->getText().setColor(sf::Color::Blue);
+        break;
+    case ContentType::ARRAY:
+        //drawable = new Array(strin, _font);
         break;
     default:
-        drawable = new sf::Text("Error", _font);
+        _drawable = new Text("Error", _font);
+        dynamic_cast<Text *>(_drawable)->getText().setColor(sf::Color::Blue);
         break;
     };
-    target.draw(*drawable);
+    _box.setPosition(offset);
+    _title.setPosition(offset);
+    _drawable->move(offset + sf::Vector2f(0, 80));
+ 
+}
+
+void DrawableModule::draw(sf::RenderTarget &target, sf::RenderStates states) const
+{
+    target.draw(_box);
+    target.draw(_title);
+    target.draw(*_drawable);
+    delete _drawable;
 }

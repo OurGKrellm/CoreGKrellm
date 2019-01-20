@@ -84,3 +84,7 @@ void Array::draw(sf::RenderTarget &target, sf::RenderStates states) const
         target.draw(*text);
     }
 }
+
+void Array::move(sf::Vector2f offset)
+{
+}
