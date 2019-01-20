@@ -111,8 +111,8 @@ void Array::move(sf::Vector2f offset)
     _posY = _posY + offset.y;
 
     size_t k = 0;
-    for (int j = 0; j < _lin; ++j) {
-        for (int i = 0; i < _col; ++i) {
+    for (int j = 0; j < _lin && k < _text.size(); ++j) {
+        for (int i = 0; i < _col && k < _text.size(); ++i) {
             _border.setPosition(_posX , _posY);
             _rectangles[k]->setPosition(_posX  + (i * _width / _col ) + 1, _posY + (j * _height / _lin) + 1);
             _text[k]->setPosition(_posX  + (i * _width / _col ) + 1 + ((10 - _text[k]->getString().getSize()) *  (_width / (10 * _lin) / 2)), _posY + (j * _height / _lin) + (_height / ( 3 * _lin)) );
