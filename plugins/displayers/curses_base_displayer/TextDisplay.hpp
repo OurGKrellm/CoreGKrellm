@@ -16,14 +16,18 @@ class TextDisplay : public IMonitorDisplay {
         TextDisplay();
         ~TextDisplay();
 
+        void loadResources() final;
         State draw(std::vector<IMonitorModule *> &modules) final;
+        void unloadResources() final;
 
     protected:
     private:
         std::size_t remakeWidgets(std::vector<IMonitorModule *> &modules);
+        void draw(IMonitorModule *module, WINDOW *window);
         WINDOW *window;
         std::vector<WINDOW *> widgets;
-        std::size_t previousHash;
+        std::vector<std::size_t> previousHashes;
+        std::size_t vectorHash;
 };
 
 #endif /* !TEXTDISPLAY_HPP_ */

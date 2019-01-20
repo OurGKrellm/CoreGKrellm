@@ -12,6 +12,7 @@
 #include <iostream>
 #include "ModuleHandler.hpp"
 #include "ModuleFactory.hpp"
+#include "PluginLoader.hpp"
 
 class Application {
 public:
@@ -21,13 +22,10 @@ public:
     void setup() noexcept;
     void run();
 private:
-    void loadPlugins() noexcept;
-    void unloadPlugins() noexcept;
-    void loadPlugin(const std::string &str);
     ModuleHandler _handler;
     ModuleFactory _factory;
+    PluginLoader _pluginLoader;
     bool _isRunning;
-    std::vector<void *> _plugins;
 };
 
 
