@@ -46,12 +46,12 @@ Array::Array(const std::string &csv, sf::Font &font)
         }
         from = end_line + 1;
         _map.push_back(std::make_tuple(new sf::Text(name, font), value));
-        _lin = static_cast<int>(value.size());
+        _col = static_cast<int>(value.size()) + 1;
         std::cout << _lin << std::endl;
     }
-    if (_lin <= 0)
+    if (_col <= 0)
         return ;
-        _col = nbr_line + 1;
+        _lin = nbr_line;
         _height = 200;
         _width = 200;
         _posX = 25;
