@@ -60,7 +60,7 @@ void GraphicDisplay::handleInput(std::vector<IMonitorModule *> &modules)
             if (_e.key.code == sf::Keyboard::Tab)
                 _wantSwitch = true;
             if (_e.key.code == sf::Keyboard::Up)
-                modules.push_back(ModuleFactory::getFactory()->clone("user"));
+                modules.push_back(ModuleFactory::getFactory()->clone("network"));
             if (_e.key.code == sf::Keyboard::Down)
                 modules.push_back(ModuleFactory::getFactory()->clone("ram"));
             if (_e.key.code == sf::Keyboard::Left)
@@ -169,7 +169,7 @@ void DrawableModule::setup(IMonitorModule *module, sf::Vector2f offset)
         dynamic_cast<Text *>(_drawable)->getText().setColor(sf::Color::Blue);
         break;
     case ContentType::ARRAY:
-        //drawable = new Array(strin, _font);
+        _drawable = new Array(string, _font);
         break;
     default:
         _drawable = new Text("Error", _font);

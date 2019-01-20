@@ -27,7 +27,6 @@ Array::Array(const std::string &csv, sf::Font &font)
         std::vector<sf::Text *> value;
 
         while (from < end_line) {
-            std::cout << "test" << std::endl;
             if (csv.find(',', from + 1) > end_line)
                 value.push_back(new sf::Text(csv.substr(from, csv.find('\n', from) - from), font));
             else
@@ -43,10 +42,15 @@ Array::Array(const std::string &csv, sf::Font &font)
         _lin = static_cast<int>(value.size());
 
     }
-        _col = nbr_line;
-        _height = 400;
+        _col = nbr_line + 1;
+        _height = 200;
         _width = 200;
-        _border.setSize({static_cast<float>(_width), static_cast<float>(_height)});
+        _posX = 25;
+        _posY = -35;
+
+
+    _border.setSize({static_cast<float>(_width), static_cast<float>(_height)});
+        _border.setPosition(_posX , _posY);
         _border.setFillColor({0, 0, 255});
 
         for (int i = 0; i < (_lin * _col); i++) {
@@ -64,11 +68,12 @@ Array::Array(const std::string &csv, sf::Font &font)
         for (int j = 0; j < _lin; ++j) {
             for (int i = 0; i < _col; ++i) {
                 _rectangles[k]->setSize({static_cast<float>(_width / _col - 1), static_cast<float>(_height  / (_lin) - 2 )});
-                _rectangles[k]->setPosition((i * _width / _col ) + 1,  (j * _height / _lin) + 1);
-                _text[k]->setPosition((i * _width / _col ) + 1,  (j * _height / _lin) + 1);
+                _rectangles[k]->setPosition(_posX  + (i * _width / _col ) + 1, _posY + (j * _height / _lin) + 1);
+                _text[k]->setPosition(_posX  + (i * _width / _col ) + 1, _posY + (j * _height / _lin) + (_height / ( 3 * _lin)) );
                 _rectangles[k]->setFillColor({0, 0, 0});
                 _text[k]->setCharacterSize(static_cast<unsigned int>(30));
                 _text[k]->setFillColor({0, 255, 0});
+                _text[k]->setCharacterSize(8);
                 k++;
             }
         }
@@ -87,5 +92,18 @@ void Array::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
 void Array::move(sf::Vector2f offset)
 {
+
+    _posX = _posX + offset.x;
+    _posY = _posY + offset.y;
+
+    size_t k = 0;
+    for (int j = 0; j < _lin; ++j) {
+        for (int i = 0; i < _col; ++i) {
+            _border.setPosition(_posX , _posY);
+            _rectangles[k]->setPosition(_posX  + (i * _width / _col ) + 1, _posY + (j * _height / _lin) + 1);
+            _text[k]->setPosition(_posX  + (i * _width / _col ) + 1, _posY + (j * _height / _lin) + (_height / ( 3 * _lin)) );
+            k++;
+        }
+    }
 
 }

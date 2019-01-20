@@ -79,6 +79,8 @@ private:
     int _height;
     int _col;
     int _lin;
+    int _posX;
+    int _posY;
     std::vector<sf::RectangleShape*> _rectangles;
     std::vector<sf::Text*> _text;
     sf::RectangleShape _border;
