@@ -28,7 +28,7 @@ void Widget::draw()
 {
     std::hash<IMonitorModule> hashFn;
 
-    if (previousHash != hashFn(*module)) {
+    this->module->UpdateContent();
             wclear(this->window);
             if (isSelected)
                 wattron(this->window, COLOR_PAIR(4));
@@ -40,7 +40,7 @@ void Widget::draw()
             drawModule(module, this->window);
             wrefresh(this->window);
             previousHash = hashFn(*module);
-    }
+
 }
 
 void Widget::drawModule(IMonitorModule *module, WINDOW *window)
@@ -51,6 +51,15 @@ void Widget::drawModule(IMonitorModule *module, WINDOW *window)
             break;
         case PERCENTAGE:
             Drawers::printPercentage(*this, 7, 1, module->getContent().content.c_str());
+            break;
+        case MULTI_PERCENTAGE:
+            Drawers::printMultiPercentage(*this, 3, 1, module->getContent().content.c_str());
+            break;
+        case CAMEMBERT:
+            Drawers::printCamenbert(*this, 3, 1, module->getContent().content.c_str());
+            break;
+        case ARRAY:
+            Drawers::printArray(*this, 3, 1, module->getContent().content.c_str());
             break;
     }
 }

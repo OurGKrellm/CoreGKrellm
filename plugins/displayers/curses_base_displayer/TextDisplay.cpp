@@ -118,6 +118,7 @@ IMonitorDisplay::State TextDisplay::draw(std::vector<IMonitorModule *> &modules)
             widget->setSelected(false);
         tempSelected--;
     }
+    wrefresh(this->window);
     auto temp = getch();
     if (temp == 9) {
         return (IMonitorDisplay::State::SWITCH);
