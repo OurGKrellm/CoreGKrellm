@@ -18,7 +18,7 @@
 ProcessorInformation::ProcessorInformation() :
     _cpu_info(),
     _content({ContentType::MULTI_PERCENTAGE, ""}),
-    _title("Processor Information : "),
+    _title(),
     _model(),
     _nbCores(0),
     _time_between_each_measure(30),
@@ -77,6 +77,7 @@ void ProcessorInformation::UpdateContent()
     if (_time_between_each_measure == _counter) {
         _counter = 0;
         _content.content.clear();
+        _title.clear();
         std::fstream input("/proc/cpuinfo", std::ios::in);
         std::fstream stat("/proc/stat", std::ios::in);
         if (!input.good())
