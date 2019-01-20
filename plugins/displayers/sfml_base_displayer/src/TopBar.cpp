@@ -12,6 +12,7 @@ TopBar::TopBar(sf::Font &font)
     , _nb(0)
     , _nbText("0", _font)
     , _bar(sf::Vector2f(WIDTH, HEIGHT / 20))
+    , _selector(ModuleFactory::getFactory()->getNames(), font)
 {
     _nbText.setColor(sf::Color::Black);
 }
@@ -23,6 +24,7 @@ void TopBar::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     target.draw(_bar);
     target.draw(_nbText);
+    target.draw(_selector);
 }
 
 void TopBar::move(sf::Vector2f offset)

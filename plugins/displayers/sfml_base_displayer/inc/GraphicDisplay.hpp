@@ -51,7 +51,6 @@ private:
     DrawableModule _drawableModule;
     TopBar _topBar;
     bool _wantSwitch;
-    Selector<std::string> _names;
 };
 
 #endif /* !GRAPHICDISPLAY_HPP_ */
