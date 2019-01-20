@@ -16,7 +16,7 @@ NAME	=			../disk_module.so
 BUILD	=			$(ROOT)/build
 
 SRC		=		$(SRC_DIR)/entrypoint.cpp \
-				$(SRC_DIR)/DiskInformation.cpp
+				$(SRC_DIR)/CpuTemperature.cpp
 
 
 CXXFLAGS=			-g -I $(ROOT) -I ../../../inc $(WARN) -std=gnu++17 -fPIC
