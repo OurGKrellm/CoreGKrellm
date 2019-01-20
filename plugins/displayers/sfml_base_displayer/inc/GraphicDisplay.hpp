@@ -12,6 +12,7 @@
 #include <SFML/Graphics.hpp>
 #include "GraphicTemplate.hpp"
 #include "ModuleFactory.hpp"
+#include "Selector.hpp"
 #include <memory>
 
 class DrawableModule : public sf::Drawable {
@@ -50,6 +51,7 @@ private:
     DrawableModule _drawableModule;
     TopBar _topBar;
     bool _wantSwitch;
+    Selector<std::string> _names;
 };
 
 #endif /* !GRAPHICDISPLAY_HPP_ */

@@ -18,6 +18,7 @@ GraphicDisplay::GraphicDisplay()
     , _globalFont(new sf::Font)
     , _drawableModule(*_globalFont)
     , _topBar(*_globalFont)
+    , _names(std::vector<std::string>({"user", "processor", "network", "ram"}))
 {
     _window->setVisible(true);
     _window->setFramerateLimit(30);
@@ -142,7 +143,7 @@ void DrawableModule::setup(IMonitorModule *module, sf::Vector2f offset)
 {
     _module = module;
     _title.setString(_module->getTitle());
-    _title.setScale(sf::Vector2f(0.8, 0.8));
+    _title.setScale(sf::Vector2f(0.5, 0.5));
     _title.setColor(sf::Color::White);
 
     auto string = _module->getContent().content;
