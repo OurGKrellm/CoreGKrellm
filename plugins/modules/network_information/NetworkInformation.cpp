@@ -72,8 +72,8 @@ void NetworkInformation::UpdateContent()
             actual_down = (unsigned int) std::stol(rx_bytes);
             actual_up = (unsigned int) std::stol(tx_bytes);
             interface += it->interface_name + ",";
-            download += std::to_string((actual_down - it->last_rx) / 1000) + ",";
-            upload += std::to_string((actual_up - it->last_tx) / 1000) + ",";
+            download += std::to_string((actual_down - it->last_rx) / 1000) + "ko/s,";
+            upload += std::to_string((actual_up - it->last_tx) / 1000) + "ko/s,";
             it->last_tx = actual_up;
             it->last_rx = actual_down;
         }
