@@ -7,6 +7,8 @@
 
 #include <exception>
 #include <string.h>
+#include <unistd.h>
+#include <iostream>
 #include "Application.hpp"
 #include "PluginLoader.hpp"
 
@@ -19,6 +21,8 @@ Application::Application()
 
 void Application::setup() noexcept
 {
+    chdir(INSTALL_PATH_STR);
+    std::cout << INSTALL_PATH_STR << std::endl;
     _pluginLoader.loadPlugins<ModuleFactory>(&_factory, std::string("./plugins/modules"));
     _pluginLoader.loadPlugins<ModuleHandler>(&_handler, std::string("./plugins/displayers"));
     std::cout << "Info: Launching the application." << std::endl;

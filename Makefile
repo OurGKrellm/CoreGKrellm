@@ -10,6 +10,8 @@ ROOT	=			.
 SUBDIRS_MODS := 			$(wildcard plugins/modules/*/.)
 SUBDIRS_DISP := 			$(wildcard plugins/displayers/*/.)
 
+INSTALL_PATH :=				/usr/share/mygkrellm
+
 SRC_DIR	=			src
 
 CXX		=			g++
@@ -56,6 +58,8 @@ BLUE	=			\e[1;34m
 
 debug:				CXXFLAGS += $(G)
 
+release:			CXXFLAGS += -D INSTALL_PATH="$(INSTALL_PATH)"
+
 all:				$(NAME) plugins displayers
 
 $(NAME):			$(OBJS)
@@ -64,6 +68,8 @@ $(NAME):			$(OBJS)
 					$(V)printf "$(GREEN)Linking obj and Libraries.$(WHITE)\n"
 
 debug: fclean echo_d $(NAME)
+
+release: fclean echo_r $(NAME)
 
 $(BUILD)/$(NAME):	$(OBJS)
 					$(V)printf "$(GREEN)Compile sources.$(WHITE)\n"
@@ -105,6 +111,9 @@ echo_build:
 echo_d:
 					$(V)printf "$(RED)DEBUG MODE initialized.$(WHITE)\n";
 
+echo_r:
+					$(V)printf "$(RED)RELEASE MODE initialized.$(WHITE)\n";
+
 plugins:				$(SUBDIRS_MODS)
 
 displayers:				$(SUBDIRS_DISP)
@@ -116,4 +125,17 @@ $(SUBDIRS_DISP):
 					$(V)make --no-print-directory -C $@
 
 
-.PHONY: clean fclean debug all re echo_debug buildrepo $(SUBDIRS_MODS) $(SUBDIRS_DISP) plugins
+install:				release plugins displayers
+					$(V)printf "$(GREEN)Installing on the system at $(INSTALL_PATH)\n$(WHITE)"
+					$(V)mkdir -p $(INSTALL_PATH)
+					$(V)cp -r res $(INSTALL_PATH)
+					$(V)mkdir -p $(INSTALL_PATH)/plugins
+					$(V)mkdir -p $(INSTALL_PATH)/plugins/modules
+					$(V)mkdir -p $(INSTALL_PATH)/plugins/displayers
+					$(V)cp plugins/modules/*.so $(INSTALL_PATH)/plugins/modules
+					$(V)cp plugins/displayers/*.so $(INSTALL_PATH)/plugins/displayers
+					$(V)cp $(NAME) /usr/bin/$(NAME)
+					$(V)printf "$(GREEN)Done installing at $(INSTALL_PATH)\n$(WHITE)"
+
+
+.PHONY: clean fclean debug all re echo_debug buildrepo $(SUBDIRS_MODS) $(SUBDIRS_DISP) plugins install
