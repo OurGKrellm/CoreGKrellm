@@ -73,8 +73,17 @@ public:
     void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
     void move(sf::Vector2f offset);
 private:
-    std::vector<std::tuple<sf::Text, std::vector<sf::Text>>> _map;
+    std::vector<std::tuple<sf::Text *, std::vector<sf::Text *>>> _map;
     sf::Font &_font;
+    int _width;
+    int _height;
+    int _col;
+    int _lin;
+    std::vector<sf::RectangleShape*> _rectangles;
+    std::vector<sf::Text*> _text;
+    sf::RectangleShape _border;
+
+
 };
 
 
