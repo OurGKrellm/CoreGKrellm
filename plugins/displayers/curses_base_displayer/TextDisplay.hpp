@@ -10,6 +10,7 @@
 
 #include <curses.h>
 #include "IMonitorDisplay.hpp"
+#include "Widget.hpp"
 
 class TextDisplay : public IMonitorDisplay {
     public:
@@ -25,7 +26,7 @@ class TextDisplay : public IMonitorDisplay {
         std::size_t remakeWidgets(std::vector<IMonitorModule *> &modules);
         void draw(IMonitorModule *module, WINDOW *window);
         WINDOW *window;
-        std::vector<WINDOW *> widgets;
+        std::vector<Widget *> widgets;
         std::vector<std::size_t> previousHashes;
         std::size_t vectorHash;
 };
